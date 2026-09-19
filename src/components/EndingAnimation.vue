@@ -201,19 +201,18 @@ onUnmounted(() => {
 
         <div class="epilogue-body">
           <p>
-            Addiction is rarely an all-at-once decision. It begins with rationalizations:
-            <em>"Allowance covers it."</em> <em>"Just once to get through exams."</em> <em>"I can stop whenever I want."</em>
+            Addiction begins with rationalizations: <em>"Just once."</em> <em>"Allowance covers it."</em> <em>"I can stop anytime."</em>
           </p>
           <p>
-            As tolerance builds, the financial shortage forces compromises: borrowing from family, burning friends, predatory loan sharks, syndicates, and street crime. In the end, the chemical promise takes everything.
+            As tolerance escalates, debt, syndicates, and crime follow. In the end, the chemical promise takes everything.
           </p>
         </div>
 
         <div class="resource-box">
-          <div class="res-title">SUBSTANCE ABUSE HELP & RESOURCES:</div>
-          <div class="res-item">📞 SAMHSA National Helpline: 1-800-662-4357 (Free, Confidential, 24/7)</div>
-          <div class="res-item">💬 Crisis Text Line: Text "HOME" to 741741</div>
-          <div class="res-item">🌐 Narcotics Anonymous / Peer Support: www.na.org</div>
+          <div class="res-title">SINGAPORE ANTI-DRUG RESOURCES:</div>
+          <div class="res-item">📞 CNB 24/7 Hotline: 1800-325-6666 (Toll-Free, Confidential)</div>
+          <div class="res-item">🏥 NAMS Clinic (IMH): 6732-6837 (All-Addictions Helpline)</div>
+          <div class="res-item">💬 Samaritans of Singapore (SOS): 1767 (24/7 Crisis Support)</div>
         </div>
 
         <div class="epilogue-actions">

@@ -88,16 +88,20 @@ This project is built on the principle of **radical minimalism**: maximizing nar
 
 ---
 
-## 7. Educational Post-Ending Pop-Up & Real-World Statistics
+## 7. Educational Post-Ending Pop-Up & Singapore Real-World Statistics
 
 1. **Reality Check Layer**:
-   Following the narrative climax or storyline terminations, a dedicated modal (`CrisisStatsModal.vue`) displays stark real-world statistics highlighting the magnitude of the substance abuse epidemic.
-2. **Key Impact Metrics**:
-   - **Annual Mortality**: 500,000+ lives lost per year globally (UNODC).
-   - **Youth Vulnerability Window**: 70%+ of chronic dependencies take root before age 20 (NIDA / SAMHSA).
-   - **Prevalence in Young Adults**: 1 in 8 young adults suffer from active substance use disorders (NSDUH).
-   - **Societal Destruction**: $740B+ annual toll in emergency healthcare, crime, and broken families.
-3. **Accessible & Non-Intrusive**:
+   Following the narrative climax or storyline terminations, a dedicated modal (`CrisisStatsModal.vue`) displays official Singapore Central Narcotics Bureau (CNB) statistics highlighting the local youth substance abuse crisis.
+2. **Key Singapore Impact Metrics (Concise & Punchy)**:
+   - **Youth Infiltration**: **>50%** of all newly arrested drug abusers in Singapore are youths under 30 (CNB Annual Statistics).
+   - **Early Onset**: Arrests recorded as young as **Age 13**, frequently lured via social media channels and peer pressure.
+   - **Primary Substance**: **#1 Methamphetamine ("Ice")** remains Singapore's most abused narcotic, causing psychosis and cardiovascular collapse.
+   - **Strict Legal Accountability**: **Misuse of Drugs Act (MDA)** enforces zero-tolerance with mandatory caning, DRC detention, and permanent criminal records.
+3. **Confidential Singapore Helplines**:
+   - **CNB Anti-Drug Hotline (24/7)**: `1800-325-6666`
+   - **National Addictions Management Service (NAMS / IMH)**: `6732-6837`
+   - **Samaritans of Singapore (SOS)**: `1767`
+4. **Accessible & Non-Intrusive**:
    - Auto-triggers following the cinematic flatline and CRT TV reboot into the epilogue.
    - Can be reviewed anytime via persistent `[ 📊 VIEW CRISIS STATISTICS ]` action buttons in both the epilogue card and story game-over banners.
 

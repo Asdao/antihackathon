@@ -29,54 +29,54 @@ function handleRestart() {
         <!-- Scrollable Body -->
         <div class="modal-content">
           <div class="sub-header">
-            <div class="headline">THE MAGNITUDE BEHIND THE SIMULATION</div>
-            <div class="tagline">Substance abuse is not an isolated choice—it is an exponential public health crisis.</div>
+            <div class="headline">SINGAPORE REALITY CHECK</div>
+            <div class="tagline">Official Central Narcotics Bureau (CNB) findings on local drug abuse.</div>
           </div>
 
           <!-- 4 Core Statistics Grid -->
           <div class="stats-grid">
-            <!-- Stat 1: Global Fatalities -->
+            <!-- Stat 1: Youth Abusers -->
             <div class="stat-card">
-              <div class="stat-badge danger-badge">ANNUAL MORTALITY</div>
-              <div class="stat-value text-danger">500,000+</div>
-              <div class="stat-label">LIVES LOST PER YEAR</div>
+              <div class="stat-badge danger-badge">CNB ANNUAL STATS</div>
+              <div class="stat-value text-danger">>50%</div>
+              <div class="stat-label">NEW ABUSERS UNDER 30</div>
               <p class="stat-desc">
-                Preventable fatalities worldwide directly attributed to illicit drug use, overdoses, and substance-induced health failures.
+                Over half of all newly arrested drug abusers in Singapore are youths under 30.
               </p>
-              <div class="stat-source">Source: UNODC World Drug Report</div>
+              <div class="stat-source">Source: CNB Singapore Annual Statistics</div>
             </div>
 
-            <!-- Stat 2: Youth Onset -->
+            <!-- Stat 2: Early Onset -->
             <div class="stat-card">
-              <div class="stat-badge warning-badge">CRITICAL WINDOW</div>
-              <div class="stat-value text-warning">70%+</div>
-              <div class="stat-label">BEGIN BEFORE AGE 20</div>
+              <div class="stat-badge warning-badge">YOUNGEST ARREST</div>
+              <div class="stat-value text-warning">AGE 13</div>
+              <div class="stat-label">EARLY ONSET TOLL</div>
               <p class="stat-desc">
-                Of individuals with chronic substance disorders started during adolescence, when the developing brain is most susceptible to dependency.
+                Youths arrested as young as 13, often lured by online misinformation and peers.
               </p>
-              <div class="stat-source">Source: NIDA / SAMHSA</div>
+              <div class="stat-source">Source: Central Narcotics Bureau SG</div>
             </div>
 
-            <!-- Stat 3: Young Adult Prevalence -->
+            <!-- Stat 3: Primary Substance -->
             <div class="stat-card">
-              <div class="stat-badge alert-badge">YOUNG ADULT TOLL</div>
-              <div class="stat-value text-alert">1 IN 8</div>
-              <div class="stat-label">AFFECTED YOUTHS</div>
+              <div class="stat-badge alert-badge">MOST ABUSED</div>
+              <div class="stat-value text-alert">#1 ICE</div>
+              <div class="stat-label">METHAMPHETAMINE</div>
               <p class="stat-desc">
-                Young adults aged 18–25 currently meet the clinical criteria for active substance use disorder, often starting from casual peer exposure.
+                Meth remains Singapore's most abused drug, causing psychosis and cardiac collapse.
               </p>
-              <div class="stat-source">Source: NSDUH Survey Data</div>
+              <div class="stat-source">Source: CNB Enforcement Data</div>
             </div>
 
-            <!-- Stat 4: Societal & Financial Cost -->
+            <!-- Stat 4: Legal Consequences -->
             <div class="stat-card">
-              <div class="stat-badge accent-badge">SOCIETAL IMPACT</div>
-              <div class="stat-value text-accent">$740B+</div>
-              <div class="stat-label">ANNUAL ECONOMIC LOSS</div>
+              <div class="stat-badge accent-badge">ZERO TOLERANCE</div>
+              <div class="stat-value text-accent">STRICT MDA</div>
+              <div class="stat-label">MISUSE OF DRUGS ACT</div>
               <p class="stat-desc">
-                Annual damages in emergency healthcare, criminal justice proceedings, lost employment potential, and broken families in the US alone.
+                Trafficking and consumption carry mandatory caning, DRC detention, and severe records.
               </p>
-              <div class="stat-source">Source: NIH / CDC Economic Estimates</div>
+              <div class="stat-source">Source: Singapore Misuse of Drugs Act</div>
             </div>
           </div>
 
@@ -84,27 +84,33 @@ function handleRestart() {
           <div class="takeaway-box">
             <div class="takeaway-title">CRISIS PERSPECTIVE:</div>
             <p class="takeaway-text">
-              In this simulation, each step felt like a temporary coping mechanism—from school allowance to debt, extortion, and physical collapse. 
-              In real life, addiction hijacks brain chemistry and destroys safety nets. Recognition, honest conversation, and early intervention save lives.
+              In Singapore, harm prevention is paramount. Early intervention, family vigilance, and professional support save lives before physical and legal ruin take hold.
             </p>
           </div>
 
           <!-- Helpline Banner -->
           <div class="helpline-banner">
-            <div class="helpline-title">FREE, CONFIDENTIAL 24/7 SUPPORT:</div>
+            <div class="helpline-title">CONFIDENTIAL SINGAPORE HELPLINES:</div>
             <div class="helpline-grid">
               <div class="helpline-item">
                 <span class="helpline-icon">📞</span>
                 <div>
-                  <strong>SAMHSA National Helpline:</strong>
-                  <div class="helpline-detail">1-800-662-4357 (Toll-Free, 24/7, English & Spanish)</div>
+                  <strong>CNB Anti-Drug Hotline:</strong>
+                  <div class="helpline-detail">1800-325-6666 (24/7 Toll-Free, Confidential)</div>
+                </div>
+              </div>
+              <div class="helpline-item">
+                <span class="helpline-icon">🏥</span>
+                <div>
+                  <strong>NAMS Clinic (IMH):</strong>
+                  <div class="helpline-detail">6732-6837 (National Addictions Management Service)</div>
                 </div>
               </div>
               <div class="helpline-item">
                 <span class="helpline-icon">💬</span>
                 <div>
-                  <strong>Crisis Text Line:</strong>
-                  <div class="helpline-detail">Text "HOME" to 741741</div>
+                  <strong>Samaritans of Singapore (SOS):</strong>
+                  <div class="helpline-detail">1767 (24/7 Hotline) / WhatsApp: 9151-1767</div>
                 </div>
               </div>
             </div>
