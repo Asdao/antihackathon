@@ -116,4 +116,22 @@ Both minigames (**Shadow Fighter** and **Parkour Runner**) follow strict silhoue
   - Animated warning pulse badge.
   - Subtle synthesizer sound clicks on open and dismiss.
 
+---
 
+## 7. Obstacle Aesthetics, Boost Sparks & Sluggish Crash Effects
+
+### 6 Procedural Urban Obstacle Archetypes
+1. **Dumpster (`jump_bin`)**: Solid container silhouette with top lid lip (`#ffb703`), vertical stiffening ribs, and hazard center stripe.
+2. **Security Fence (`jump_fence`)**: Tall chainlink perimeter with upright support posts, cross-mesh lattice (`#224422`), and barbed wire prongs.
+3. **Overhead Pipe (`slide_pipe`)**: Industrial drainage conduit suspended overhead with pipe flanges and glowing toxic drip drops (`#00ff88`).
+4. **Overhead Beam (`slide_beam`)**: Structural steel girder with alternating caution yellow/black diagonal warning stripes (`#ffd166`).
+5. **Chemical Barrels (`jump_barrels`)**: Twin stacked steel barrels with biohazard warning bands and seam ribs.
+6. **AC Ventilation Unit (`jump_ac_vent`)**: Rooftop air conditioning condenser with cooling fan intake louvers and side exhaust elbow tube.
+
+### Drug Surge Obstacle Shattering
+- When boosted, obstacles shattered on contact disperse into four exploding fragment blocks (`#00ffff`) coupled with 16 radial cyan spark particles.
+
+### Sluggish Crash Visual Language
+1. **Dual Ghost Trails**: Lagging silhouette after-images drawn behind the player at $18\text{px}$ ($\alpha = 0.35$) and $34\text{px}$ ($\alpha = 0.18$) offsets in fatigued brownish tone (`#3a2710`), visually communicating delayed neuromuscular response.
+2. **Pulsating Amber CRT Overlay**: Dynamic canvas wash (`rgba(180, 95, 10, alpha)`) pulsating at $0.12\text{Hz}$ across the screen.
+3. **On-Canvas Alert Banners**: Framed high-visibility HUD alert (`rgba(30, 18, 5, 0.88)` with blinking `#ffb703` border) warning `💤 CRASHING // SPEED -50% & REFLEXES COMPROMISED`.

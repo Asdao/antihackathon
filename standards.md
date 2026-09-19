@@ -112,5 +112,27 @@ This project is built on the principle of **radical minimalism**: maximizing nar
    - Automated tests are executed via Node.js native test runner (`npm test` / `node --test`).
    - Tests comprehensively verify story graph continuity, choice validity, robbery arrest/death routing, count prohibitions, compounding debt, and substance cost escalation.
 
+---
 
+## 9. Minigame Pacing, Obstacle Diversity, Boost Immunity & Evident Crash Feedback
 
+1. **Extended Pacing & Duration**:
+   - Both minigames are balanced for sustained engagement rather than instantaneous resolution:
+     - **Shadow Fighter**: Opponent HP scaled to 180 (Storekeeper), 250 (Gambler), and 340 (Enforcer) with 160 Player HP, creating 30–45s bouts with rhythmic attack telegraphing and tactical blocking.
+     - **Parkour Runner**: Target distances scaled to 950 (Alleyways), 1400 (Rooftops), and 1900 (Cranes), delivering 35–65s of continuous urban parkour.
+2. **6 Diverse Obstacle Archetypes**:
+   - Both vertical clearance (jumping) and low clearance (sliding) are mandatory:
+     - `jump_bin`: Metal dumpster with reinforced lid lip and vertical ribs.
+     - `jump_fence`: Security chainlink fence with barbed-wire prongs.
+     - `slide_pipe`: Overhead industrial toxic pipe with flanges and dripping chemical drops.
+     - `slide_beam`: Overhead structural I-beam with caution diagonal hazard stripes.
+     - `jump_barrels`: Double stacked chemical drums with warning stripes.
+     - `jump_ac_vent`: Rooftop ventilation condenser with cooling fan slats and exhaust elbow.
+3. **100% Obstacle Immunity When Drug Boosted**:
+   - When `state.stats.boostActive` is true, the player is completely impervious to obstacles:
+     - 0 damage, 0 stamina penalty, 0 trip count penalties.
+     - Collided obstacles shatter instantly with cyan particle spark bursts (`#00ffff`) and metallic crunch sound effects.
+4. **Highly Evident Sluggish Crash Feedback**:
+   - When the drug boost crashes (`state.stats.sluggishTimer > 0`), the physical degradation is unmistakable across gameplay, visuals, and UI:
+     - **Parkour Runner**: Severe 50% speed cut, 30% jump height reduction (leaden/heavy jump physics), extended slide recovery (48 frames), dual lagging ghost after-images, pulsating amber CRT canvas overlay, on-canvas warning banner (`💤 CRASHING // SPEED -50% & REFLEXES COMPROMISED`), and HUD crash badge.
+     - **Shadow Fighter**: 250ms–340ms windup delay before punches/kicks land, recovery lock doubled to 24–36 frames (leaving the player vulnerable), 40% damage penalty, dual lagging ghost after-images, amber CRT overlay, on-canvas warning banner, and HUD crash badge.

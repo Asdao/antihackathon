@@ -112,7 +112,7 @@ export function useGameState() {
     addLog('Consumed drug dose: Surge activated!', 'warning');
 
     if (boostInterval) clearInterval(boostInterval);
-    boostInterval = window.setInterval(() => {
+    boostInterval = setInterval(() => {
       if (s.boostTimer > 0) {
         s.boostTimer--;
       } else {
@@ -125,7 +125,7 @@ export function useGameState() {
         soundManager.playGlitch();
 
         if (sluggishInterval) clearInterval(sluggishInterval);
-        sluggishInterval = window.setInterval(() => {
+        sluggishInterval = setInterval(() => {
           if (s.sluggishTimer > 0) s.sluggishTimer--;
           else clearInterval(sluggishInterval!);
         }, 1000);

@@ -8,13 +8,13 @@ const { state, onFightComplete, triggerDrugBoost } = useGameState();
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 let animationFrameId: number | null = null;
 
-// Target configurations for diverse opponents
+// Target configurations for diverse opponents (extended arcade durations)
 const targetConfigs = [
   {
     name: 'CORNER STORE OWNER',
     title: 'CORNER GROCERY // OVERDUE DEBT',
-    maxHp: 80,
-    dmg: 8,
+    maxHp: 180,
+    dmg: 10,
     speed: 0.015,
     bounty: 400,
     build: 'short',
@@ -22,8 +22,8 @@ const targetConfigs = [
   {
     name: 'UNDERGROUND GAMBLER',
     title: 'GAMBLING DEN // COMPOUNDING LOAN',
-    maxHp: 110,
-    dmg: 14,
+    maxHp: 250,
+    dmg: 15,
     speed: 0.022,
     bounty: 600,
     build: 'medium',
@@ -31,7 +31,7 @@ const targetConfigs = [
   {
     name: 'ROGUE WAREHOUSE BOUNCER',
     title: 'WAREHOUSE // SYNDICATE ENFORCER',
-    maxHp: 150,
+    maxHp: 340,
     dmg: 20,
     speed: 0.028,
     bounty: 1000,
@@ -44,9 +44,9 @@ const currentTargetConfig = computed(() => {
   return targetConfigs[index];
 });
 
-// Combatant states
-const playerHp = ref(100);
-const playerMaxHp = 100;
+// Combatant states (scaled for tactical 30-45s bouts)
+const playerHp = ref(160);
+const playerMaxHp = 160;
 const opponentHp = ref(targetConfigs[state.currentFightLevel - 1].maxHp);
 
 type ActionState = 'idle' | 'punching' | 'kicking' | 'blocking' | 'hit' | 'knocked';
@@ -58,6 +58,7 @@ let playerActionTimer = 0;
 let opponentActionTimer = 0;
 let opponentAttackTimer = 0;
 let opponentTelegraphTimer = 0;
+let combatFrameCount = 0;
 
 // Sparks particle system
 interface Particle {
@@ -92,19 +93,27 @@ function spawnSparks(x: number, y: number, isCritical = false) {
   }
 }
 
-// Player attack actions
+// Player attack actions with evident sluggish delay & recovery locks
 function executePlayerAttack(type: 'punch' | 'kick') {
   if (playerState.value !== 'idle' || battleOver.value) return;
 
   const isKick = type === 'kick';
+  const isSluggish = state.stats.sluggishTimer > 0;
+  const isBoosted = state.stats.boostActive;
+
   playerState.value = isKick ? 'kicking' : 'punching';
-  playerActionTimer = state.stats.sluggishTimer > 0 ? (isKick ? 20 : 15) : (isKick ? 14 : 10);
+  // Evident recovery lock: sluggish timer doubles recovery delay (36/24 vs 14/10)
+  playerActionTimer = isSluggish ? (isKick ? 36 : 24) : (isKick ? 14 : 10);
   
   if (isKick) soundManager.playKick();
   else soundManager.playPunch();
 
-  const isBoosted = state.stats.boostActive;
-  const dmg = (isKick ? 24 : 14) * (isBoosted ? 1.7 : 1) * (state.stats.sluggishTimer > 0 ? 0.75 : 1);
+  // Damage calculations: Punch 12, Kick 20; boosted +50%, sluggish -40%
+  const baseDmg = isKick ? 20 : 12;
+  const dmg = baseDmg * (isBoosted ? 1.5 : 1) * (isSluggish ? 0.6 : 1);
+
+  // Evident windup delay: 250ms/340ms when sluggish (simulating delayed motor response)
+  const windupDelay = isSluggish ? (isKick ? 340 : 250) : (isBoosted ? 80 : (isKick ? 150 : 100));
 
   setTimeout(() => {
     if (battleOver.value) return;
@@ -117,7 +126,7 @@ function executePlayerAttack(type: 'punch' | 'kick') {
       else soundManager.playPunch();
       opponentHp.value = Math.max(0, opponentHp.value - Math.round(dmg));
       opponentState.value = 'hit';
-      opponentActionTimer = isKick ? 12 : 10;
+      opponentActionTimer = isKick ? 14 : 10;
       screenShake = isKick ? 10 : 6;
       spawnSparks(430, isKick ? 230 : 190, isBoosted);
     }
@@ -125,7 +134,7 @@ function executePlayerAttack(type: 'punch' | 'kick') {
     if (opponentHp.value <= 0) {
       handleOpponentDefeated();
     }
-  }, isKick ? 150 : 100);
+  }, windupDelay);
 }
 
 function startBlock() {
@@ -186,15 +195,15 @@ function updateOpponentAI() {
   }
 
   opponentAttackTimer++;
-  const threshold = Math.max(35, 70 - state.currentFightLevel * 12);
+  const threshold = Math.max(45, 80 - state.currentFightLevel * 10);
   if (opponentAttackTimer >= threshold) {
     opponentAttackTimer = 0;
     if ((playerState.value === 'punching' || playerState.value === 'kicking') && Math.random() < 0.45) {
       opponentState.value = 'blocking';
-      opponentActionTimer = 20;
+      opponentActionTimer = 22;
       return;
     }
-    opponentTelegraphTimer = 18;
+    opponentTelegraphTimer = 20;
   }
 }
 
@@ -249,6 +258,7 @@ function render() {
 
   const width = canvas.width;
   const height = canvas.height;
+  combatFrameCount++;
 
   // Handle screen shake
   ctx.save();
@@ -290,6 +300,19 @@ function render() {
   ctx.arc(60, 120, 140, 0, Math.PI * 2);
   ctx.fill();
 
+  // Render sluggish ghost after-images behind the player (evident motor lag)
+  if (state.stats.sluggishTimer > 0) {
+    ctx.save();
+    ctx.globalAlpha = 0.35;
+    drawSilhouetteFighter(ctx, 202, 300, playerState.value, true, false, false, 'sluggish');
+    ctx.restore();
+
+    ctx.save();
+    ctx.globalAlpha = 0.18;
+    drawSilhouetteFighter(ctx, 186, 300, playerState.value, true, false, false, 'sluggish');
+    ctx.restore();
+  }
+
   // Draw Silhouette Fighters
   drawSilhouetteFighter(ctx, 220, 300, playerState.value, true, state.stats.boostActive, false);
   
@@ -304,6 +327,41 @@ function render() {
     isTelegraphing, 
     currentTargetConfig.value.build
   );
+
+  // Evident Sluggish Crash Amber Wash
+  if (state.stats.sluggishTimer > 0) {
+    const sluggishAlpha = 0.20 + Math.sin(combatFrameCount * 0.12) * 0.08;
+    ctx.fillStyle = `rgba(180, 95, 10, ${sluggishAlpha})`;
+    ctx.fillRect(0, 0, width, height);
+  }
+
+  // Evident On-Canvas Status Banners
+  if (state.stats.boostActive) {
+    ctx.save();
+    ctx.fillStyle = 'rgba(0, 20, 25, 0.88)';
+    ctx.fillRect(Math.floor(width / 2) - 180, 10, 360, 26);
+    ctx.strokeStyle = '#00ffff';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(Math.floor(width / 2) - 180, 10, 360, 26);
+    ctx.fillStyle = '#00ffff';
+    ctx.font = 'bold 11px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('⚡ DRUG SURGE // +50% ATK & FAST REFLEXES', Math.floor(width / 2), 27);
+    ctx.restore();
+  } else if (state.stats.sluggishTimer > 0) {
+    ctx.save();
+    const pulseColor = Math.sin(combatFrameCount * 0.15) > 0 ? '#ffb703' : '#e63946';
+    ctx.fillStyle = 'rgba(30, 18, 5, 0.88)';
+    ctx.fillRect(Math.floor(width / 2) - 195, 10, 390, 26);
+    ctx.strokeStyle = pulseColor;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(Math.floor(width / 2) - 195, 10, 390, 26);
+    ctx.fillStyle = pulseColor;
+    ctx.font = 'bold 11px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('💤 CRASHING // REACTION SPEED & POWER REDUCED', Math.floor(width / 2), 27);
+    ctx.restore();
+  }
 
   // Render hit particles
   for (let i = particles.length - 1; i >= 0; i--) {
@@ -364,7 +422,9 @@ function drawSilhouetteFighter(
   const cutoutColor = '#102210';
   let silColor = isPlayer ? '#050a05' : '#030603';
 
-  if (isTelegraphing) {
+  if (build === 'sluggish') {
+    silColor = '#3a2710';
+  } else if (isTelegraphing) {
     silColor = '#ff2222';
   } else if (action === 'hit') {
     silColor = '#ffffff';
@@ -508,13 +568,17 @@ onUnmounted(() => {
       <!-- Player HP -->
       <div class="fighter-card player-side">
         <div class="name-row">
-          <span class="label">YOU (ENFORCER)</span>
+          <span class="label">
+            YOU (ENFORCER)
+            <span v-if="state.stats.boostActive" class="boost-tag"> [⚡ SURGE]</span>
+            <span v-else-if="state.stats.sluggishTimer > 0" class="sluggish-tag"> [💤 CRASH]</span>
+          </span>
           <span class="hp-txt">HEALTH</span>
         </div>
         <div class="pixel-meter">
           <div 
             class="pixel-meter-fill" 
-            :class="playerHp < 30 ? 'danger' : ''"
+            :class="playerHp < 50 ? 'danger' : ''"
             :style="{ width: `${(playerHp / playerMaxHp) * 100}%` }"
           ></div>
         </div>
@@ -651,6 +715,16 @@ onUnmounted(() => {
   display: flex;
   justify-content: space-between;
   font-size: 10px;
+}
+
+.boost-tag {
+  color: #00ffff;
+  font-weight: bold;
+}
+
+.sluggish-tag {
+  color: #ffb703;
+  font-weight: bold;
 }
 
 .target-side .name-row {
