@@ -138,5 +138,21 @@ This project is built on the principle of **radical minimalism**: maximizing nar
      - Collided obstacles shatter instantly with cyan particle spark bursts (`#00ffff`) and metallic crunch sound effects.
 4. **Highly Evident Sluggish Crash Feedback**:
    - When the drug boost crashes (`state.stats.sluggishTimer > 0`), the physical degradation is unmistakable across gameplay, visuals, and UI:
-     - **Parkour Runner**: Severe 50% speed cut, 30% jump height reduction (leaden/heavy jump physics), extended slide recovery (48 frames), dual lagging ghost after-images, pulsating amber CRT canvas overlay, on-canvas warning banner (`💤 CRASHING // SPEED -50% & REFLEXES COMPROMISED`), and HUD crash badge.
+     - **Parkour Runner**: Severe 50% speed cut, 30% jump height reduction (leaden/heavy jump physics), extended slide recovery (48 frames), dual lagging ghost after-images, pulsating amber CRT canvas overlay, on-canvas warning banner (`💤 CRASHING // SPEED -50%`), and HUD crash badge.
      - **Shadow Fighter**: 250ms–340ms windup delay before punches/kicks land, recovery lock doubled to 24–36 frames (leaving the player vulnerable), 40% damage penalty, dual lagging ghost after-images, amber CRT overlay, on-canvas warning banner, and HUD crash badge.
+
+---
+
+## 10. UI Ergonomics & Visual Decluttering
+
+1. **No Faux-Cabinet Visual Junk**:
+   - Do not render fake vent slots, speaker dot grids, flashing power LEDs, or fake model numbers around the screen. Screen estate is dedicated purely to readable narrative and gameplay.
+2. **Visual Comfort & Anti-Strain Standard**:
+   - Full-screen rapid opacity flicker (`crt-flicker`) is disabled to prevent ocular fatigue.
+   - Scanlines must use gentle, low-opacity linear gradients (`0.08`) without aggressive RGB chromatic fringing.
+3. **No Duplicate HUD Elements Across Layers**:
+   - `StatusBar` is displayed only in `STORY` mode. Minigames (`ShadowFighter` and `ParkourRunner`) own their own dedicated combat/escape meters and actions, eliminating duplicate health bars and duplicate boost buttons.
+4. **Clean Single-Row Status Ribbon**:
+   - Status metrics are organized in a clean, single-line ribbon (~28px) rather than multiple rows of heavy, nested boxes.
+5. **Zero Developer Noise in Gameplay**:
+   - Internal node IDs (e.g. `START_SCHOOL`, `STAGE_ROB_1_INTRO`) and redundant key-guide banners must never be shown to players.

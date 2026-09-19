@@ -542,31 +542,31 @@ function render() {
     ctx.fillRect(0, 0, width, height);
   }
 
-  // Evident On-Canvas Status Banners
+  // Compact On-Canvas Status Banners
   if (state.stats.boostActive) {
     ctx.save();
     ctx.fillStyle = 'rgba(0, 20, 25, 0.88)';
-    ctx.fillRect(Math.floor(width / 2) - 180, 10, 360, 26);
+    ctx.fillRect(Math.floor(width / 2) - 120, 8, 240, 20);
     ctx.strokeStyle = '#00ffff';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(Math.floor(width / 2) - 180, 10, 360, 26);
+    ctx.lineWidth = 1;
+    ctx.strokeRect(Math.floor(width / 2) - 120, 8, 240, 20);
     ctx.fillStyle = '#00ffff';
-    ctx.font = 'bold 11px monospace';
+    ctx.font = 'bold 9px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText('⚡ CHEMICAL SURGE ACTIVE // 100% OBSTACLE IMMUNITY', Math.floor(width / 2), 27);
+    ctx.fillText('⚡ SURGE // 100% IMMUNITY', Math.floor(width / 2), 22);
     ctx.restore();
   } else if (state.stats.sluggishTimer > 0) {
     ctx.save();
     const pulseColor = Math.sin(runFrameCount * 0.15) > 0 ? '#ffb703' : '#e63946';
     ctx.fillStyle = 'rgba(30, 18, 5, 0.88)';
-    ctx.fillRect(Math.floor(width / 2) - 195, 10, 390, 26);
+    ctx.fillRect(Math.floor(width / 2) - 130, 8, 260, 20);
     ctx.strokeStyle = pulseColor;
-    ctx.lineWidth = 2;
-    ctx.strokeRect(Math.floor(width / 2) - 195, 10, 390, 26);
+    ctx.lineWidth = 1;
+    ctx.strokeRect(Math.floor(width / 2) - 130, 8, 260, 20);
     ctx.fillStyle = pulseColor;
-    ctx.font = 'bold 11px monospace';
+    ctx.font = 'bold 9px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText('💤 CRASHING // SPEED -50% & REFLEXES COMPROMISED', Math.floor(width / 2), 27);
+    ctx.fillText('💤 CRASHING // SPEED -50%', Math.floor(width / 2), 22);
     ctx.restore();
   }
 
@@ -684,33 +684,25 @@ onUnmounted(() => {
   <div class="parkour-wrapper">
     <!-- Top Runner HUD -->
     <div class="runner-hud">
-      <div class="stage-info">
+      <div class="hud-header">
         <span class="stage-title">{{ currentConfig.title }}</span>
-        <span class="stage-sub">{{ currentConfig.subtitle }}</span>
+        <span 
+          class="hits-label"
+          :class="{
+            'boost-label': state.stats.boostActive,
+            'sluggish-label': state.stats.sluggishTimer > 0 && !state.stats.boostActive
+          }"
+        >
+          <template v-if="state.stats.boostActive">⚡ IMMUNE</template>
+          <template v-else-if="state.stats.sluggishTimer > 0">💤 SLUGGISH</template>
+          <template v-else>{{ hitCount === 0 ? 'STEADY' : hitCount === 1 ? 'VULNERABLE' : 'CRITICAL' }}</template>
+        </span>
       </div>
-
-      <!-- Distance Progress -->
-      <div class="distance-bar-wrapper">
-        <div class="dist-header">
-          <span>GETAWAY ROUTE</span>
-          <span 
-            class="hits-label"
-            :class="{
-              'boost-label': state.stats.boostActive,
-              'sluggish-label': state.stats.sluggishTimer > 0 && !state.stats.boostActive
-            }"
-          >
-            <template v-if="state.stats.boostActive">⚡ SURGE ACTIVE // 100% IMMUNITY</template>
-            <template v-else-if="state.stats.sluggishTimer > 0">💤 CRASH ACTIVE // SLUGGISH SLOWDOWN</template>
-            <template v-else>STATUS: {{ hitCount === 0 ? 'STEADY' : hitCount === 1 ? 'VULNERABLE' : 'CRITICAL' }}</template>
-          </span>
-        </div>
-        <div class="pixel-meter">
-          <div 
-            class="pixel-meter-fill" 
-            :style="{ width: `${progressPercent}%` }"
-          ></div>
-        </div>
+      <div class="pixel-meter">
+        <div 
+          class="pixel-meter-fill" 
+          :style="{ width: `${progressPercent}%` }"
+        ></div>
       </div>
     </div>
 
@@ -727,7 +719,7 @@ onUnmounted(() => {
       <div v-if="runOver" class="run-overlay">
         <template v-if="runResult === 'win'">
           <div class="result-title text-success">ESCAPE SUCCESSFUL</div>
-          <p class="result-desc">You slipped past the pursuit with the cash into the next borough.</p>
+          <p class="result-desc">You slipped past pursuit into the next borough.</p>
           <button class="retro-btn" @click="finishRun">
             PROCEED TO NEXT STAGE ➔
           </button>
@@ -735,7 +727,7 @@ onUnmounted(() => {
         <template v-else>
           <div class="result-title text-danger">BODY COLLAPSE</div>
           <p class="result-desc">
-            Your drug-weakened body and failing stamina gave out. You collapsed on the concrete.
+            Your stamina and health gave out. You collapsed on the concrete.
           </p>
           <button class="retro-btn retro-btn-danger" @click="finishRun">
             VIEW THE ENDING ➔
@@ -744,12 +736,8 @@ onUnmounted(() => {
       </div>
     </div>
 
-    <!-- Runner Action Buttons & Guide -->
+    <!-- Runner Action Buttons -->
     <div class="runner-controls">
-      <div class="controls-guide">
-        <span>KEYS: [W / UP] JUMP | [S / DOWN] SLIDE | [SPACE] BOOST</span>
-      </div>
-
       <div class="buttons-bar">
         <button 
           class="retro-btn run-btn" 
@@ -772,7 +760,7 @@ onUnmounted(() => {
           :disabled="state.stats.doses <= 0 || state.stats.boostActive || runOver"
           @click="handleBoost"
         >
-          ⚡ DRUG BOOST
+          ⚡ BOOST
         </button>
 
         <button 
@@ -781,7 +769,7 @@ onUnmounted(() => {
           @click="surrenderRun"
           title="Stop running and collapse"
         >
-          NO (COLLAPSE)
+          COLLAPSE
         </button>
       </div>
     </div>
@@ -806,7 +794,7 @@ onUnmounted(() => {
   gap: 6px;
 }
 
-.stage-info {
+.hud-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -814,31 +802,15 @@ onUnmounted(() => {
 
 .stage-title {
   color: var(--retro-warning);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: bold;
-}
-
-.stage-sub {
-  font-family: var(--font-terminal);
-  font-size: 16px;
-  opacity: 0.8;
-}
-
-.distance-bar-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.dist-header {
-  display: flex;
-  justify-content: space-between;
-  font-size: 9px;
+  letter-spacing: 0.8px;
 }
 
 .hits-label {
   color: var(--retro-danger);
   font-weight: bold;
+  font-size: 9px;
 }
 
 .boost-label {

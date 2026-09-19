@@ -15,7 +15,6 @@ function handleChoice(choice: StoryChoice) {
     <div class="active-card">
       <div class="card-header">
         <span class="stage-tag">{{ currentNode.stageTitle }}</span>
-        <span class="node-id">{{ currentNode.id }}</span>
       </div>
 
       <div class="situation-box">
@@ -84,51 +83,44 @@ function handleChoice(choice: StoryChoice) {
   display: flex;
   flex-direction: column;
   height: 100%;
-  gap: 12px;
+  gap: 8px;
   overflow: hidden;
-  padding: 12px;
+  padding: 8px 10px;
 }
 
 .active-card {
   background: var(--retro-bg-dark);
-  border: 3px solid var(--retro-accent);
-  padding: 16px;
+  border: 2px solid var(--retro-accent);
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+  gap: 10px;
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px dashed var(--retro-accent);
-  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--retro-accent);
+  padding-bottom: 6px;
 }
 
 .stage-tag {
   color: var(--retro-warning);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 1px;
   font-weight: bold;
 }
 
-.node-id {
-  font-size: 9px;
-  opacity: 0.5;
-}
-
 .situation-box {
   background: var(--retro-bg-darkest);
-  border: 2px solid var(--retro-accent);
-  padding: 14px;
+  padding: 10px 12px;
 }
 
 .situation-text {
   font-family: var(--font-terminal);
   font-size: 20px;
-  line-height: 1.4;
+  line-height: 1.35;
   color: var(--retro-text-light);
 }
 

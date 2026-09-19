@@ -51,12 +51,14 @@ High-contrast 1-bit cyberpunk arcade:
 ## 3. CRT Screen Effects
 
 1. **Scanline Overlay (`.crt-overlay`)**:
-   Pure CSS gradient (`linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%)`) at `100% 3px` pitch.
+   Pure CSS gradient (`linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.08) 50%)`) at `100% 3px` pitch. Low-opacity subtle texture without ocular strain or chromatic RGB fringing.
 2. **Vignette (`.crt-vignette`)**:
-   Deep `inset 0 0 80px rgba(0, 0, 0, 0.8)` simulating phosphor tube curvature.
-3. **Screen Glitch (`.glitch-active`)**:
-   Keyframe displacement `transform: translate(-2px, 2px)` combined with contrast boost, triggered during drug boosts and the final climax.
-4. **CRT Power-Off Collapse (`.tv-power-off`)**:
+   Soft `inset 0 0 40px rgba(0, 0, 0, 0.5)` softening screen boundaries without obscuring corner HUD data.
+3. **Anti-Strain Standards (No Rapid Flicker)**:
+   Rapid opacity flickering (`crt-flicker`) is disabled to prevent ocular fatigue while preserving authentic phosphor atmosphere.
+4. **Screen Glitch (`.glitch-active`)**:
+   Keyframe displacement `transform: translate(-2px, 2px)` combined with contrast boost, triggered momentarily during drug boosts and the final climax.
+5. **CRT Power-Off Collapse (`.tv-power-off`)**:
    Vintage television shutdown animation collapsing the screen horizontally into a razor-thin line, shrinking to a dot, and fading into pitch black.
 
 ---
@@ -135,3 +137,18 @@ Both minigames (**Shadow Fighter** and **Parkour Runner**) follow strict silhoue
 1. **Dual Ghost Trails**: Lagging silhouette after-images drawn behind the player at $18\text{px}$ ($\alpha = 0.35$) and $34\text{px}$ ($\alpha = 0.18$) offsets in fatigued brownish tone (`#3a2710`), visually communicating delayed neuromuscular response.
 2. **Pulsating Amber CRT Overlay**: Dynamic canvas wash (`rgba(180, 95, 10, alpha)`) pulsating at $0.12\text{Hz}$ across the screen.
 3. **On-Canvas Alert Banners**: Framed high-visibility HUD alert (`rgba(30, 18, 5, 0.88)` with blinking `#ffb703` border) warning `💤 CRASHING // SPEED -50% & REFLEXES COMPROMISED`.
+
+---
+
+## 8. UI Ergonomics & Screen Real Estate
+
+- **Maximum Screen Allocation**:
+  - The CRT bezel frame minimizes dead space with a slim 24px top header, eliminating faux-cabinet decorative noise (vents, speaker dots, flashing power LEDs).
+- **Single-Line Status Ribbon**:
+  - Global status meters are packed into a streamlined 28px horizontal ribbon (`.status-ribbon`) with micro-meters and badge pills.
+- **Contextual HUD Mounting**:
+  - `StatusBar` renders strictly during `STORY` mode. Minigames (`ShadowFighter` and `ParkourRunner`) render their own integrated HUDs, avoiding overlapping duplicate health bars or duplicate drug buttons.
+- **Clean Canvas Badging**:
+  - In-game alerts and warnings use compact top-centered canvas badges ($240\text{px} \times 24\text{px}$) rather than massive full-width blocking overlays.
+- **Elimination of UI Clutter**:
+  - Developer node IDs, redundant instructional banners, and nested box borders are removed to ensure a clean, comfortable retro gaming experience.

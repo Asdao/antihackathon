@@ -335,31 +335,31 @@ function render() {
     ctx.fillRect(0, 0, width, height);
   }
 
-  // Evident On-Canvas Status Banners
+  // Compact On-Canvas Status Banners
   if (state.stats.boostActive) {
     ctx.save();
     ctx.fillStyle = 'rgba(0, 20, 25, 0.88)';
-    ctx.fillRect(Math.floor(width / 2) - 180, 10, 360, 26);
+    ctx.fillRect(Math.floor(width / 2) - 120, 8, 240, 20);
     ctx.strokeStyle = '#00ffff';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(Math.floor(width / 2) - 180, 10, 360, 26);
+    ctx.lineWidth = 1;
+    ctx.strokeRect(Math.floor(width / 2) - 120, 8, 240, 20);
     ctx.fillStyle = '#00ffff';
-    ctx.font = 'bold 11px monospace';
+    ctx.font = 'bold 9px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText('⚡ DRUG SURGE // +50% ATK & FAST REFLEXES', Math.floor(width / 2), 27);
+    ctx.fillText('⚡ SURGE // +50% ATK', Math.floor(width / 2), 22);
     ctx.restore();
   } else if (state.stats.sluggishTimer > 0) {
     ctx.save();
     const pulseColor = Math.sin(combatFrameCount * 0.15) > 0 ? '#ffb703' : '#e63946';
     ctx.fillStyle = 'rgba(30, 18, 5, 0.88)';
-    ctx.fillRect(Math.floor(width / 2) - 195, 10, 390, 26);
+    ctx.fillRect(Math.floor(width / 2) - 130, 8, 260, 20);
     ctx.strokeStyle = pulseColor;
-    ctx.lineWidth = 2;
-    ctx.strokeRect(Math.floor(width / 2) - 195, 10, 390, 26);
+    ctx.lineWidth = 1;
+    ctx.strokeRect(Math.floor(width / 2) - 130, 8, 260, 20);
     ctx.fillStyle = pulseColor;
-    ctx.font = 'bold 11px monospace';
+    ctx.font = 'bold 9px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText('💤 CRASHING // REACTION SPEED & POWER REDUCED', Math.floor(width / 2), 27);
+    ctx.fillText('💤 CRASHING // SPEED -50%', Math.floor(width / 2), 22);
     ctx.restore();
   }
 
@@ -568,12 +568,9 @@ onUnmounted(() => {
       <!-- Player HP -->
       <div class="fighter-card player-side">
         <div class="name-row">
-          <span class="label">
-            YOU (ENFORCER)
-            <span v-if="state.stats.boostActive" class="boost-tag"> [⚡ SURGE]</span>
-            <span v-else-if="state.stats.sluggishTimer > 0" class="sluggish-tag"> [💤 CRASH]</span>
-          </span>
-          <span class="hp-txt">HEALTH</span>
+          <span class="label">YOU</span>
+          <span v-if="state.stats.boostActive" class="boost-tag">⚡ SURGE</span>
+          <span v-else-if="state.stats.sluggishTimer > 0" class="sluggish-tag">💤 CRASH</span>
         </div>
         <div class="pixel-meter">
           <div 
@@ -589,7 +586,6 @@ onUnmounted(() => {
       <!-- Opponent HP -->
       <div class="fighter-card target-side">
         <div class="name-row">
-          <span class="hp-txt">TARGET HP</span>
           <span class="label text-danger">{{ currentTargetConfig.name }}</span>
         </div>
         <div class="pixel-meter">
@@ -631,10 +627,6 @@ onUnmounted(() => {
 
     <!-- Combat Controls / Action Pad -->
     <div class="controls-panel">
-      <div class="keys-guide">
-        <span>KEYBOARD: [A] PUNCH | [D] KICK | [S] BLOCK | [SPACE] BOOST</span>
-      </div>
-
       <div class="action-buttons-grid">
         <button 
           class="retro-btn action-btn" 
@@ -669,16 +661,16 @@ onUnmounted(() => {
           :disabled="state.stats.doses <= 0 || state.stats.boostActive || battleOver"
           @click="triggerDrugBoost"
         >
-          ⚡ DRUG BOOST
+          ⚡ BOOST
         </button>
 
         <button 
           class="retro-btn retro-btn-danger retreat-btn" 
           :disabled="battleOver"
           @click="retreatFight"
-          title="Refuse to beat the target / Give up"
+          title="Surrender / Give up"
         >
-          NO (SURRENDER)
+          SURRENDER
         </button>
       </div>
     </div>

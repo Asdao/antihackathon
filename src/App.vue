@@ -14,8 +14,8 @@ const { state } = useGameState();
 <template>
   <main class="app-root" :data-theme="state.theme">
     <CRTFrame>
-      <!-- Top Persistent Status HUD -->
-      <StatusBar />
+      <!-- Top Persistent Status HUD (in Story mode) -->
+      <StatusBar v-if="state.mode === 'STORY'" />
 
       <!-- Main Game View Switcher -->
       <div class="content-viewport">
