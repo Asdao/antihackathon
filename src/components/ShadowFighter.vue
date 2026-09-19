@@ -2,11 +2,13 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { useGameState } from '../state/useGameState';
 import { soundManager } from '../audio/SoundManager';
+import { createPixelFilter } from '../graphics/pixelFilter';
 
 const { state, onFightComplete, triggerDrugBoost } = useGameState();
 
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 let animationFrameId: number | null = null;
+const applyPixelFilter = createPixelFilter(320, 190);
 
 // Target configurations for diverse opponents (extended arcade durations)
 const targetConfigs = [
@@ -334,6 +336,9 @@ function render() {
     ctx.fillStyle = `rgba(180, 95, 10, ${sluggishAlpha})`;
     ctx.fillRect(0, 0, width, height);
   }
+
+  // Pixelate the game world before drawing readable status labels.
+  applyPixelFilter(ctx);
 
   // Compact On-Canvas Status Banners
   if (state.stats.boostActive) {

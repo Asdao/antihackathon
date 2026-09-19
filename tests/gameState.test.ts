@@ -161,4 +161,13 @@ describe('Game State & Mechanics Test Suite', () => {
     assert.strictEqual(state.showStatsModal, false);
     assert.strictEqual(state.mode, 'STORY');
   });
+
+  it('tracks visited chapters for the archive and clears them on replay', () => {
+    selectChoice({ text: 'Borrow bus fare', targetNodeId: 'FRIEND_GIVES_LESS' });
+    selectChoice({ text: 'Ask parents', targetNodeId: 'PARENT_GIVES_LESS' });
+    selectChoice({ text: 'Borrow bus fare', targetNodeId: 'FRIEND_GIVES_LESS' });
+    assert.deepEqual(state.visitedNodeIds, ['START_SCHOOL', 'FRIEND_GIVES_LESS', 'PARENT_GIVES_LESS']);
+    resetGame();
+    assert.deepEqual(state.visitedNodeIds, ['START_SCHOOL']);
+  });
 });

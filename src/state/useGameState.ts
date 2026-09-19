@@ -21,18 +21,21 @@ const defaultStats = (): PlayerStats => ({
 interface GameState {
   mode: GameMode;
   currentNodeId: string;
+  visitedNodeIds: string[];
   stats: PlayerStats;
   logs: StoryLogItem[];
   currentFightLevel: 1 | 2 | 3;
   currentRobLevel: 1 | 2 | 3;
   theme: 'dmg' | 'amber' | 'neon';
   scanlinesEnabled: boolean;
+  reducedMotion: boolean;
   showStatsModal: boolean;
 }
 
 const state = reactive<GameState>({
   mode: 'STORY',
   currentNodeId: 'START_SCHOOL',
+  visitedNodeIds: ['START_SCHOOL'],
   stats: defaultStats(),
   logs: [{
     id: 'log-0',
@@ -43,8 +46,9 @@ const state = reactive<GameState>({
   }],
   currentFightLevel: 1,
   currentRobLevel: 1,
-  theme: 'dmg',
+  theme: 'amber',
   scanlinesEnabled: true,
+  reducedMotion: typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   showStatsModal: false,
 });
 
@@ -158,6 +162,7 @@ export function useGameState() {
       const next = STORY_NODES[choice.targetNodeId];
       if (next) {
         state.currentNodeId = next.id;
+        if (!state.visitedNodeIds.includes(next.id)) state.visitedNodeIds.push(next.id);
         state.stats.age = next.age;
         if (next.logMessage) addLog(next.logMessage, next.isEnding ? 'danger' : 'info');
         if (next.statEffects) applyStatDeltas(next.statEffects);
@@ -220,6 +225,7 @@ export function useGameState() {
 
     state.mode = 'STORY';
     state.currentNodeId = 'START_SCHOOL';
+    state.visitedNodeIds = ['START_SCHOOL'];
     state.stats = defaultStats();
     state.currentFightLevel = 1;
     state.currentRobLevel = 1;
@@ -248,6 +254,10 @@ export function useGameState() {
     state.theme = cycle[state.theme];
   }
 
+  function toggleMotion() {
+    state.reducedMotion = !state.reducedMotion;
+  }
+
   return {
     state,
     currentNode,
@@ -260,5 +270,6 @@ export function useGameState() {
     openStatsModal,
     closeStatsModal,
     toggleTheme,
+    toggleMotion,
   };
 }

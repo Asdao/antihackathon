@@ -11,6 +11,8 @@
   --retro-text-light: #9bbc0f;
   --retro-danger: #e63946;
   --retro-warning: #ffb703;
+  --retro-muted: #a9b888;
+  --retro-border: #52733a;
   --retro-scanline-opacity: 0.15;
   --font-pixel: 'Press Start 2P', 'Courier New', monospace;
   --font-terminal: 'VT323', monospace;
@@ -18,12 +20,14 @@
 
 /* Amber CRT Theme */
 [data-theme="amber"] {
-  --retro-bg-darkest: #0c0800;
-  --retro-bg-dark: #2d1c00;
-  --retro-accent: #9e6c00;
-  --retro-text-light: #ffba08;
-  --retro-danger: #d00000;
-  --retro-warning: #f48c06;
+  --retro-bg-darkest: #111412;
+  --retro-bg-dark: #222820;
+  --retro-accent: #c4a172;
+  --retro-text-light: #e0dfcb;
+  --retro-danger: #db7160;
+  --retro-warning: #d3ac72;
+  --retro-muted: #9da28e;
+  --retro-border: #41483b;
   --retro-scanline-opacity: 0.22;
 }
 
@@ -35,6 +39,8 @@
   --retro-text-light: #f7f7f7;
   --retro-danger: #ff0055;
   --retro-warning: #ffe600;
+  --retro-muted: #a3a3bc;
+  --retro-border: #42425e;
   --retro-scanline-opacity: 0.18;
 }
 
@@ -239,6 +245,21 @@ body {
   gap: 8px;
   box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.8);
   transition: all 0.08s ease-in-out;
+}
+
+button:focus-visible, a:focus-visible {
+  outline: 2px solid var(--retro-text-light);
+  outline-offset: 4px;
+}
+
+.reduced-motion *, .reduced-motion *::before, .reduced-motion *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
 
 .retro-btn:hover:not(:disabled) {

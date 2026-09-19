@@ -12,7 +12,7 @@ const { state } = useGameState();
 </script>
 
 <template>
-  <main class="app-root" :data-theme="state.theme">
+  <main class="app-root" :data-theme="state.theme" :class="{ 'reduced-motion': state.reducedMotion }">
     <CRTFrame>
       <!-- Top Persistent Status HUD (in Story mode) -->
       <StatusBar v-if="state.mode === 'STORY'" />
@@ -38,7 +38,7 @@ const { state } = useGameState();
 
 .app-root {
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
