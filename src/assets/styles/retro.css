@@ -1,0 +1,263 @@
+/* ==========================================================================
+   RETRO CRT & HANDHELD CONSOLE STYLING
+   Zero-asset pure CSS retro gaming framework
+   ========================================================================== */
+
+:root {
+  /* Default: Game Boy DMG-01 Theme */
+  --retro-bg-darkest: #0f380f;
+  --retro-bg-dark: #306230;
+  --retro-accent: #8bac0f;
+  --retro-text-light: #9bbc0f;
+  --retro-danger: #e63946;
+  --retro-warning: #ffb703;
+  --retro-scanline-opacity: 0.15;
+  --font-pixel: 'Press Start 2P', 'Courier New', monospace;
+  --font-terminal: 'VT323', monospace;
+}
+
+/* Amber CRT Theme */
+[data-theme="amber"] {
+  --retro-bg-darkest: #0c0800;
+  --retro-bg-dark: #2d1c00;
+  --retro-accent: #9e6c00;
+  --retro-text-light: #ffba08;
+  --retro-danger: #d00000;
+  --retro-warning: #f48c06;
+  --retro-scanline-opacity: 0.22;
+}
+
+/* Cyber Noir / Neon Arcade */
+[data-theme="neon"] {
+  --retro-bg-darkest: #0a0a12;
+  --retro-bg-dark: #1b1b2f;
+  --retro-accent: #00f0ff;
+  --retro-text-light: #f7f7f7;
+  --retro-danger: #ff0055;
+  --retro-warning: #ffe600;
+  --retro-scanline-opacity: 0.18;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #050505;
+  color: var(--retro-text-light);
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  line-height: 1.6;
+  user-select: none;
+  -webkit-font-smoothing: none;
+  image-rendering: pixelated;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* CRT Overlay */
+.crt-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 99;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, var(--retro-scanline-opacity)) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 6px 100%;
+}
+
+.crt-vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 98;
+  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.9);
+}
+
+/* CRT Screen Curvature Frame */
+.crt-monitor {
+  position: relative;
+  background-color: var(--retro-bg-darkest);
+  border: 4px solid var(--retro-accent);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.9), inset 0 0 12px rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Subtle Screen Flicker */
+.crt-flicker {
+  animation: crtFlicker 0.15s infinite;
+}
+
+@keyframes crtFlicker {
+  0% { opacity: 0.99; }
+  50% { opacity: 1; }
+  100% { opacity: 0.985; }
+}
+
+/* Severe Glitch effect (for Drug boost or Ending) */
+.glitch-active {
+  animation: glitchShake 0.2s cubic-bezier(.25, .46, .45, .94) both infinite;
+  filter: contrast(160%) saturate(140%) hue-rotate(90deg);
+}
+
+@keyframes glitchShake {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+/* Flatline TV Power Off Animation */
+.tv-power-off {
+  animation: tvShutOff 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes tvShutOff {
+  0% {
+    transform: scale(1, 1);
+    filter: brightness(1);
+  }
+  40% {
+    transform: scale(1, 0.005);
+    filter: brightness(2);
+  }
+  80% {
+    transform: scale(0.005, 0.005);
+    filter: brightness(5);
+  }
+  100% {
+    transform: scale(0, 0);
+    filter: brightness(0);
+    opacity: 0;
+  }
+}
+
+/* Retro Buttons */
+.retro-btn {
+  background-color: var(--retro-bg-dark);
+  color: var(--retro-text-light);
+  border: 3px solid var(--retro-accent);
+  padding: 10px 14px;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.8);
+  transition: all 0.08s ease-in-out;
+}
+
+.retro-btn:hover:not(:disabled) {
+  background-color: var(--retro-accent);
+  color: var(--retro-bg-darkest);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.9);
+}
+
+.retro-btn:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.9);
+}
+
+.retro-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  filter: grayscale(80%);
+}
+
+.retro-btn-danger {
+  border-color: var(--retro-danger);
+  color: #ff858d;
+}
+
+.retro-btn-danger:hover:not(:disabled) {
+  background-color: var(--retro-danger);
+  color: #ffffff;
+}
+
+.retro-btn-warning {
+  border-color: var(--retro-warning);
+  color: var(--retro-warning);
+}
+
+.retro-btn-warning:hover:not(:disabled) {
+  background-color: var(--retro-warning);
+  color: #000;
+}
+
+/* Pixel Progress Meter */
+.pixel-meter {
+  height: 14px;
+  background-color: #000;
+  border: 2px solid var(--retro-accent);
+  position: relative;
+  overflow: hidden;
+}
+
+.pixel-meter-fill {
+  height: 100%;
+  background-color: var(--retro-accent);
+  transition: width 0.25s ease-out;
+}
+
+.pixel-meter-fill.danger {
+  background-color: var(--retro-danger);
+}
+
+.pixel-meter-fill.warning {
+  background-color: var(--retro-warning);
+}
+
+/* Custom Scrollbar for Retro Log */
+.retro-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.retro-scroll::-webkit-scrollbar-track {
+  background: var(--retro-bg-darkest);
+  border-left: 2px solid var(--retro-bg-dark);
+}
+
+.retro-scroll::-webkit-scrollbar-thumb {
+  background: var(--retro-accent);
+}
+
+.retro-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--retro-text-light);
+}
+
+/* Pulsing Heartbeat Effect */
+.heartbeat-pulse {
+  animation: heartPulse 0.6s ease-in-out infinite;
+}
+
+@keyframes heartPulse {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.15); filter: drop-shadow(0 0 10px var(--retro-danger)); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.1); filter: drop-shadow(0 0 6px var(--retro-danger)); }
+  70% { transform: scale(1); }
+}
