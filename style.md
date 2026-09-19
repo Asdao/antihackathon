@@ -145,7 +145,7 @@ Both minigames (**Shadow Fighter** and **Parkour Runner**) follow strict silhoue
 - **Maximum Screen Allocation**:
   - The CRT bezel frame minimizes dead space with a slim 24px top header, eliminating faux-cabinet decorative noise (vents, speaker dots, flashing power LEDs).
 - **Single-Line Status Ribbon**:
-  - Global status meters are packed into a streamlined 28px horizontal ribbon (`.status-ribbon`) with micro-meters and badge pills.
+  - Global status meters are packed into a streamlined 28px horizontal ribbon with micro-meters (Age, Cash, Debt, HP, Stamina). Tactical boost controls are removed from the main story ribbon and reside strictly in minigame action decks.
 - **Contextual HUD Mounting**:
   - `StatusBar` renders strictly during `STORY` mode. Minigames (`ShadowFighter` and `ParkourRunner`) render their own integrated HUDs, avoiding overlapping duplicate health bars or duplicate drug buttons.
 - **Clean Canvas Badging**:

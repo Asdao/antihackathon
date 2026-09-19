@@ -153,7 +153,7 @@ This project is built on the principle of **radical minimalism**: maximizing nar
 3. **No Duplicate HUD Elements Across Layers**:
    - `StatusBar` is displayed only in `STORY` mode. Minigames (`ShadowFighter` and `ParkourRunner`) own their own dedicated combat/escape meters and actions, eliminating duplicate health bars and duplicate boost buttons.
 4. **Clean Single-Row Status Ribbon**:
-   - Status metrics are organized in a clean, single-line ribbon (~28px) rather than multiple rows of heavy, nested boxes.
+   - Status metrics are organized in a clean, single-line ribbon (~28px) displaying Age, Cash, Debt, HP, and Stamina. Tactical actions such as Drug Boost reside exclusively in minigame control decks (where obstacle shattering and combat power actually function) and are removed from the main story UI.
 5. **Zero Developer Noise in Gameplay**:
    - Internal node IDs (e.g. `START_SCHOOL`, `STAGE_ROB_1_INTRO`) and redundant key-guide banners must never be shown to players.
 
