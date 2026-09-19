@@ -97,14 +97,14 @@ export const STORY_NODES: Record<string, StoryNode> = {
     },
     choices: [
       {
-        text: 'Ask parents again',
-        targetNodeId: 'FRIEND_ASK',
-        btnClass: 'warning',
-      },
-      {
-        text: 'Turn to a friend',
+        text: 'Turn to a friend for cash',
         targetNodeId: 'FRIEND_ASK',
         btnClass: 'default',
+      },
+      {
+        text: 'No (Seek street cash)',
+        targetNodeId: 'LOAN_SHARK_APPEARS',
+        btnClass: 'danger',
       },
     ],
   },
@@ -136,14 +136,9 @@ export const STORY_NODES: Record<string, StoryNode> = {
     },
     choices: [
       {
-        text: 'No (Friend cuts contact)',
+        text: 'Friend cuts contact (Seek street loan shark)',
         targetNodeId: 'LOAN_SHARK_APPEARS',
         btnClass: 'danger',
-      },
-      {
-        text: 'Beg for more',
-        targetNodeId: 'LOAN_SHARK_APPEARS',
-        btnClass: 'warning',
       },
     ],
   },

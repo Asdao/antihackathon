@@ -1,15 +1,10 @@
 <script setup lang="ts">
 import { useGameState } from '../state/useGameState';
 
-const { state, closeStatsModal, resetGame } = useGameState();
+const { state, closeStatsModal } = useGameState();
 
 function handleDismiss() {
   closeStatsModal();
-}
-
-function handleRestart() {
-  closeStatsModal();
-  resetGame();
 }
 </script>
 
@@ -23,7 +18,6 @@ function handleRestart() {
             <span class="warning-pulse">⚠</span>
             <span class="modal-title">CRISIS DOSSIER // REALITY CHECK</span>
           </div>
-          <button class="close-btn" title="Close" @click="handleDismiss">✕</button>
         </div>
 
         <!-- Scrollable Body -->
@@ -120,10 +114,7 @@ function handleRestart() {
         <!-- Footer Actions -->
         <div class="modal-footer">
           <button class="retro-btn dismiss-btn" @click="handleDismiss">
-            ✕ DISMISS DOSSIER
-          </button>
-          <button class="retro-btn restart-action-btn" @click="handleRestart">
-            ↻ RESTART LIFE SIMULATION
+            ✕ RETURN TO GAME
           </button>
         </div>
       </div>
@@ -187,22 +178,6 @@ function handleRestart() {
   color: var(--retro-warning);
   letter-spacing: 1.5px;
   font-weight: bold;
-}
-
-.close-btn {
-  background: transparent;
-  border: 1px solid var(--retro-warning);
-  color: var(--retro-warning);
-  font-family: inherit;
-  font-size: 11px;
-  padding: 2px 7px;
-  cursor: pointer;
-  transition: all 0.1s ease;
-}
-
-.close-btn:hover {
-  background: var(--retro-warning);
-  color: #000;
 }
 
 .modal-content {
@@ -409,14 +384,7 @@ function handleRestart() {
 }
 
 .dismiss-btn {
-  padding: 6px 12px;
-  font-size: 10px;
-}
-
-.restart-action-btn {
-  background: var(--retro-danger);
-  color: #fff;
-  padding: 6px 12px;
+  padding: 8px 16px;
   font-size: 10px;
 }
 

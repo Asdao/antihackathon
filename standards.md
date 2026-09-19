@@ -156,6 +156,11 @@ This project is built on the principle of **radical minimalism**: maximizing nar
    - Status metrics are organized in a clean, single-line ribbon (~28px) displaying Age, Cash, Debt, HP, and Stamina. Tactical actions such as Drug Boost reside exclusively in minigame control decks (where obstacle shattering and combat power actually function) and are removed from the main story UI.
 5. **Zero Developer Noise in Gameplay**:
    - Internal node IDs (e.g. `START_SCHOOL`, `STAGE_ROB_1_INTRO`) and redundant key-guide banners must never be shown to players.
+6. **Zero Repetitive / Duplicate Buttons Mandate**:
+   - Every button in the application must perform a distinct, unique function.
+   - If a button performs an action or navigates to a destination, there must never be another button doing the exact same thing in the same view or modal.
+   - Story nodes must never contain multiple choices that route to the same target node or action (enforced by automated unit testing).
+   - Dialog modals (such as `CrisisStatsModal.vue`) must offer a single, prominent exit action (`✕ RETURN TO GAME`) without redundant secondary close icons or duplicate restart buttons that already exist on the underlying view.
 
 ---
 

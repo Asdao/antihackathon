@@ -118,4 +118,16 @@ describe('Story Nodes & Graph Integrity', () => {
       }
     }
   });
+
+  it('enforces rule: No repetitive buttons leading to the same target within the same node', () => {
+    for (const [nodeId, node] of Object.entries(STORY_NODES)) {
+      const targets = node.choices.map((c) => c.targetNodeId || c.action?.type);
+      const uniqueTargets = new Set(targets);
+      assert.strictEqual(
+        uniqueTargets.size,
+        targets.length,
+        `Node [${nodeId}] contains repetitive choices leading to the same destination`
+      );
+    }
+  });
 });

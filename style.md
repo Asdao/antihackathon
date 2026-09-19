@@ -152,6 +152,8 @@ Both minigames (**Shadow Fighter** and **Parkour Runner**) follow strict silhoue
   - In-game alerts and warnings use compact top-centered canvas badges ($240\text{px} \times 24\text{px}$) rather than massive full-width blocking overlays.
 - **Elimination of UI Clutter**:
   - Developer node IDs, redundant instructional banners, and nested box borders are removed to ensure a clean, comfortable retro gaming experience.
+- **Zero Button Duplication**:
+  - Each actionable button has a dedicated single role. Modals and view cards eliminate redundant secondary close icons or repeated restart buttons, maintaining a clean 1:1 action-to-button relationship.
 
 ---
 
