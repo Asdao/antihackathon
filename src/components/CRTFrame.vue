@@ -13,12 +13,12 @@ function toggleAudio() {
 </script>
 
 <template>
-  <div class="handheld-bezel" :data-theme="state.theme">
+  <div class="handheld-bezel" :data-theme="state.theme" :class="{ 'bezel-emergency': state.mode === 'ENDING_SEQUENCE' }">
     <!-- Clean Minimalist Header Utility Bar -->
-    <header class="frame-top-bar">
+    <header class="frame-top-bar" :class="{ 'top-bar-emergency': state.mode === 'ENDING_SEQUENCE' }">
       <div class="app-title">
-        <span class="pulse-dot">●</span>
-        <span>SHADOW SPIRAL</span>
+        <span class="pulse-dot" :class="{ 'emergency-dot': state.mode === 'ENDING_SEQUENCE' }">●</span>
+        <span>{{ state.mode === 'ENDING_SEQUENCE' ? 'CRITICAL SYSTEM ARREST' : 'SHADOW SPIRAL' }}</span>
       </div>
       <div class="frame-controls">
         <button class="frame-btn" @click="toggleTheme" title="Switch Retro Palette">
@@ -31,7 +31,7 @@ function toggleAudio() {
     </header>
 
     <!-- Clean Screen Housing -->
-    <div class="crt-monitor">
+    <div class="crt-monitor" :class="{ 'monitor-emergency': state.mode === 'ENDING_SEQUENCE' }">
       <!-- CRT Scanline & Vignette Overlays -->
       <div v-if="state.scanlinesEnabled" class="crt-overlay"></div>
       <div class="crt-vignette"></div>
@@ -135,5 +135,30 @@ function toggleAudio() {
   overflow: hidden;
   position: relative;
   z-index: 10;
+}
+
+/* Bad Ending Emergency Bezel Effects */
+.bezel-emergency {
+  box-shadow: inset 0 0 40px rgba(255, 0, 0, 0.35);
+}
+
+.top-bar-emergency {
+  background: #140003 !important;
+  border-bottom: 1px solid var(--retro-danger) !important;
+}
+
+.emergency-dot {
+  color: #ff0033 !important;
+  animation: emergencyBlink 0.15s infinite alternate !important;
+}
+
+@keyframes emergencyBlink {
+  0% { opacity: 0.2; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1.4); }
+}
+
+.monitor-emergency {
+  border-color: var(--retro-danger) !important;
+  box-shadow: inset 0 0 25px rgba(255, 0, 50, 0.7), 0 0 20px rgba(255, 0, 50, 0.4) !important;
 }
 </style>

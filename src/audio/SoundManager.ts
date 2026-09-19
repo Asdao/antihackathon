@@ -208,6 +208,11 @@ class RetroSoundManager {
   public playGlitch() {
     this.playNoise(0.06, 2000, 0.25);
   }
+
+  public playStaticBurst() {
+    this.playNoise(0.14, 5000, 0.35);
+    this.playTone(90, 30, 0.14, 'sawtooth', 0.15);
+  }
 }
 
 export const soundManager = new RetroSoundManager();

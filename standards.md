@@ -156,3 +156,21 @@ This project is built on the principle of **radical minimalism**: maximizing nar
    - Status metrics are organized in a clean, single-line ribbon (~28px) rather than multiple rows of heavy, nested boxes.
 5. **Zero Developer Noise in Gameplay**:
    - Internal node IDs (e.g. `START_SCHOOL`, `STAGE_ROB_1_INTRO`) and redundant key-guide banners must never be shown to players.
+
+---
+
+## 11. Bad Ending Climax: Full-Screen Catastrophic Flicker & Multi-Phase Animation
+
+1. **Contextual Full-Screen Instability**:
+   - While general gameplay strictly eliminates eye-straining flicker for visual comfort, the fatal climax (`EndingAnimation.vue`) deliberately unleashes full-screen CRT collapse to powerfully dramatize acute overdose, terminal arrhythmia, and brain synapse failure.
+2. **Phase 1: Severe Tachycardia & Screen Heartbeat Jolts**:
+   - As heart rate accelerates from 110 to 210 BPM, each cardiac spike triggers a violent screen jolt (`heartbeat-jolt-overlay`), surging the screen scale and firing a deep crimson edge vignette (`rgba(255, 0, 0, 0.85)`).
+3. **Phase 2: Neurological Timeline Flashbacks & Catastrophic Screen Flicker**:
+   - Multi-layer full-screen phosphor flicker (`screen-catastrophic-flicker`), tearing scanlines moving vertically across the viewport, stroboscopic noise bursts, and blinding whiteout strobes.
+   - Large centered cinematic flashback overlay presenting key narrative milestones with chromatic aberration shadows (`text-shadow: -3px 0 #ff0055, 3px 0 #00ffff`).
+   - Accompanied by synthesized audio static bursts and electrical glitch snaps.
+4. **Phase 3: Asystole & Flatline Terminal Lockdown**:
+   - Cold red terminal mode with continuous 800Hz piercing flatline audio.
+   - Flashing emergency asystole banner (`SYSTEM ASYSTOLE // 00 BPM`) and unbroken glowing red flatline.
+5. **Phase 4: High-Voltage CRT Beam Collapse**:
+   - TV shut-off animation squashing the screen into a white-hot horizontal beam with glowing phosphor bloom, shrinking to a dot, and collapsing into total void blackness before transitioning into the educational epilogue.

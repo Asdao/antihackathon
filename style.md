@@ -152,3 +152,19 @@ Both minigames (**Shadow Fighter** and **Parkour Runner**) follow strict silhoue
   - In-game alerts and warnings use compact top-centered canvas badges ($240\text{px} \times 24\text{px}$) rather than massive full-width blocking overlays.
 - **Elimination of UI Clutter**:
   - Developer node IDs, redundant instructional banners, and nested box borders are removed to ensure a clean, comfortable retro gaming experience.
+
+---
+
+## 9. Bad Ending Climax: Full-Screen Catastrophic Flicker & Cinematic Visuals
+
+- **Screen Heartbeat Shockwaves (`.screen-heartbeat-jolt`)**:
+  - Full-screen scale expansion (`1.025`) and deep red emergency vignette flare (`rgba(255, 0, 0, 0.85)`) on each accelerated cardiac spike.
+- **Catastrophic Phosphor Flicker (`.screen-catastrophic-flicker`)**:
+  - High-intensity phosphor instability cycling through $0.22\text{s}$ step keyframes with severe contrast surges ($350\%$), color inversions, skewing, and blackouts.
+- **Scanline Tearing & Whiteout Strobes (`.fullscreen-scanline-tear`, `.strobe-whiteout`)**:
+  - Glowing cyan/crimson horizontal glitch bar ripping vertically across the viewport.
+  - Blinding white flashouts triggering on neurological memory switches.
+- **Cinematic Centered Flashback Overlay (`.cinematic-memory-overlay`)**:
+  - Translucent dark card ($90\%$ screen width) framed by double hazard borders with glowing text ($28\text{px}$) and dual-color chromatic aberration (`text-shadow: -3px 0 #ff0055, 3px 0 #00ffff`).
+- **High-Voltage CRT Implosion (`.tv-power-off`)**:
+  - Extreme horizontal beam squash into a brilliant white laser line with phosphor halo bloom (`box-shadow: 0 0 60px #fff`), snapping to a glowing point before extinguishing into total blackout.
