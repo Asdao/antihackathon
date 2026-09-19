@@ -6,6 +6,7 @@ import StoryLog from './components/StoryLog.vue';
 import ShadowFighter from './components/ShadowFighter.vue';
 import ParkourRunner from './components/ParkourRunner.vue';
 import EndingAnimation from './components/EndingAnimation.vue';
+import CrisisStatsModal from './components/CrisisStatsModal.vue';
 
 const { state } = useGameState();
 </script>
@@ -25,6 +26,9 @@ const { state } = useGameState();
           <EndingAnimation v-else-if="state.mode === 'ENDING_SEQUENCE'" />
         </transition>
       </div>
+
+      <!-- Crisis Statistics Modal Pop-up -->
+      <CrisisStatsModal />
     </CRTFrame>
   </main>
 </template>

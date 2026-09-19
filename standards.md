@@ -84,3 +84,19 @@ This project is built on the principle of **radical minimalism**: maximizing nar
 2. **Dynamic Substance Inflation**:
    Drug acquisition cost is not static—it dynamically increases with the player's tolerance and addiction levels, driving the player deeper into financial desperation.
 
+---
+
+## 7. Educational Post-Ending Pop-Up & Real-World Statistics
+
+1. **Reality Check Layer**:
+   Following the narrative climax or storyline terminations, a dedicated modal (`CrisisStatsModal.vue`) displays stark real-world statistics highlighting the magnitude of the substance abuse epidemic.
+2. **Key Impact Metrics**:
+   - **Annual Mortality**: 500,000+ lives lost per year globally (UNODC).
+   - **Youth Vulnerability Window**: 70%+ of chronic dependencies take root before age 20 (NIDA / SAMHSA).
+   - **Prevalence in Young Adults**: 1 in 8 young adults suffer from active substance use disorders (NSDUH).
+   - **Societal Destruction**: $740B+ annual toll in emergency healthcare, crime, and broken families.
+3. **Accessible & Non-Intrusive**:
+   - Auto-triggers following the cinematic flatline and CRT TV reboot into the epilogue.
+   - Can be reviewed anytime via persistent `[ 📊 VIEW CRISIS STATISTICS ]` action buttons in both the epilogue card and story game-over banners.
+
+

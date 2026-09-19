@@ -27,6 +27,7 @@ interface GameState {
   currentRobLevel: 1 | 2 | 3;
   theme: 'dmg' | 'amber' | 'neon';
   scanlinesEnabled: boolean;
+  showStatsModal: boolean;
 }
 
 const state = reactive<GameState>({
@@ -44,6 +45,7 @@ const state = reactive<GameState>({
   currentRobLevel: 1,
   theme: 'dmg',
   scanlinesEnabled: true,
+  showStatsModal: false,
 });
 
 let boostInterval: number | null = null;
@@ -219,6 +221,7 @@ export function useGameState() {
     state.stats = defaultStats();
     state.currentFightLevel = 1;
     state.currentRobLevel = 1;
+    state.showStatsModal = false;
     state.logs = [{
       id: `log-reset-${Date.now()}`,
       timestamp: '08:00',
@@ -226,6 +229,16 @@ export function useGameState() {
       text: 'Began sophomore year at West River High School.',
       type: 'info',
     }];
+  }
+
+  function openStatsModal() {
+    soundManager.playClick(660);
+    state.showStatsModal = true;
+  }
+
+  function closeStatsModal() {
+    soundManager.playClick(440);
+    state.showStatsModal = false;
   }
 
   function toggleTheme() {
@@ -242,6 +255,8 @@ export function useGameState() {
     onFightComplete,
     onRobComplete,
     resetGame,
+    openStatsModal,
+    closeStatsModal,
     toggleTheme,
   };
 }

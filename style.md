@@ -100,3 +100,18 @@ Both minigames (**Shadow Fighter** and **Parkour Runner**) follow strict silhoue
    - Massive broad-shouldered frame ($1.45\times$ scale).
    - Spiked shoulder pads, combat boots, and a tall mohawk hairstyle.
 
+---
+
+## 6. Modal & Dossier Dialogs
+
+- **Backdrop**: Semi-transparent dark wash (`rgba(0, 0, 0, 0.88)`) with slight backdrop blur, overlaying the full CRT screen viewport (`inset: 0`).
+- **Dialog Border**: Heavy $3\text{px}$ warning or accent border with double drop shadows.
+- **Statistic Callouts**:
+  - High-visibility oversized digits (`20px - 24px`) in `'Press Start 2P'`.
+  - Color-coded indicator tags (`danger-badge`, `warning-badge`, `alert-badge`, `accent-badge`).
+  - Terminal body descriptions in `'VT323'` font with high contrast and readable line heights.
+- **Micro-Interactions**:
+  - Animated warning pulse badge.
+  - Subtle synthesizer sound clicks on open and dismiss.
+
+

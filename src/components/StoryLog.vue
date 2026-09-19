@@ -2,7 +2,7 @@
 import { useGameState } from '../state/useGameState';
 import type { StoryChoice } from '../types/game';
 
-const { state, currentNode, selectChoice, resetGame } = useGameState();
+const { state, currentNode, selectChoice, resetGame, openStatsModal } = useGameState();
 
 function handleChoice(choice: StoryChoice) {
   selectChoice(choice);
@@ -27,9 +27,14 @@ function handleChoice(choice: StoryChoice) {
         <div class="ending-skull">☠</div>
         <div class="ending-title">STORYLINE TERMINATED</div>
         <div class="ending-desc">{{ currentNode.endingReason }}</div>
-        <button class="retro-btn restart-btn" @click="resetGame">
-          ↻ REPLAY FROM SCHOOL
-        </button>
+        <div class="ending-actions">
+          <button class="retro-btn stats-trigger-btn" @click="openStatsModal">
+            📊 VIEW CRISIS STATISTICS
+          </button>
+          <button class="retro-btn restart-btn" @click="resetGame">
+            ↻ REPLAY FROM SCHOOL
+          </button>
+        </div>
       </div>
 
       <!-- Choice Actions -->
@@ -176,10 +181,33 @@ function handleChoice(choice: StoryChoice) {
   color: #ffb4b8;
 }
 
+.ending-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 320px;
+  margin-top: 6px;
+}
+
+.stats-trigger-btn {
+  background: var(--retro-bg-darkest);
+  border: 2px solid var(--retro-warning);
+  color: var(--retro-warning);
+  font-size: 11px;
+  padding: 10px;
+}
+
+.stats-trigger-btn:hover {
+  background: var(--retro-warning);
+  color: #000;
+}
+
 .restart-btn {
   background: var(--retro-danger);
   color: #fff;
-  margin-top: 8px;
+  padding: 10px;
+  font-size: 11px;
 }
 
 .history-panel {

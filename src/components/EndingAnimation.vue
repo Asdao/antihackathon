@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { useGameState } from '../state/useGameState';
 import { soundManager } from '../audio/SoundManager';
 
-const { resetGame } = useGameState();
+const { resetGame, openStatsModal } = useGameState();
 
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 let animationFrameId: number | null = null;
@@ -77,6 +77,9 @@ function triggerFlatlinePhase() {
       soundManager.stopFlatline();
       phase.value = 'epilogue';
       showTvPowerOff.value = false;
+      setTimeout(() => {
+        openStatsModal();
+      }, 650);
     }, 1200);
   }, 2200);
 }
@@ -213,9 +216,14 @@ onUnmounted(() => {
           <div class="res-item">🌐 Narcotics Anonymous / Peer Support: www.na.org</div>
         </div>
 
-        <button class="retro-btn restart-btn" @click="resetGame">
-          ↺ RESTART LIFE SIMULATION
-        </button>
+        <div class="epilogue-actions">
+          <button class="retro-btn stats-btn" @click="openStatsModal">
+            📊 VIEW CRISIS STATISTICS
+          </button>
+          <button class="retro-btn restart-btn" @click="resetGame">
+            ↺ RESTART LIFE SIMULATION
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -366,14 +374,28 @@ onUnmounted(() => {
   font-weight: bold;
 }
 
-.res-item {
-  color: #a7f3d0;
-  line-height: 1.4;
+.epilogue-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.stats-btn {
+  background: var(--retro-bg-darkest);
+  border: 2px solid var(--retro-warning);
+  color: var(--retro-warning);
+  padding: 12px;
+  font-size: 11px;
+}
+
+.stats-btn:hover {
+  background: var(--retro-warning);
+  color: #000;
 }
 
 .restart-btn {
-  margin-top: 8px;
-  padding: 14px;
-  font-size: 12px;
+  padding: 12px;
+  font-size: 11px;
 }
 </style>
