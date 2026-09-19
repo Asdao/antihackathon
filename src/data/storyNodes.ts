@@ -4,13 +4,13 @@ export const STORY_NODES: Record<string, StoryNode> = {
   // --- SCHOOL & ALLOWANCE STAGE ---
   'START_SCHOOL': {
     id: 'START_SCHOOL',
-    stageTitle: 'SCHOOL // THE FIRST STEP',
+    stageTitle: 'SCHOOL // FIRST DOSE',
     age: 'Age 16',
-    situation: 'High School, Sophomore Year. A classmate passes you a small red-and-white capsule behind the gym bleachers. "Takes the stress right off exams, makes you feel invincible. Everybody is doing it."',
-    logMessage: 'Offered unknown prescription stimulant at school.',
+    situation: 'Offered a prescription stimulant behind gym bleachers. "Takes exam stress off. Just once."',
+    logMessage: 'Took stimulant pill at school.',
     choices: [
       {
-        text: 'Take it ("Just this once to feel good...")',
+        text: 'Take it',
         targetNodeId: 'ALLOWANCE_COVER_1',
         btnClass: 'warning',
       },
@@ -21,8 +21,8 @@ export const STORY_NODES: Record<string, StoryNode> = {
     id: 'ALLOWANCE_COVER_1',
     stageTitle: 'SCHOOL // ALLOWANCE COVERS',
     age: 'Age 16',
-    situation: 'The initial rush was incredible—energy surged through you. But by Wednesday, the crash leaves you irritable and hollow. You hand over your weekly allowance ($25) to buy another batch from the school dealer. It easily covers it.',
-    logMessage: 'Spent weekly allowance ($25) on pills. Tolerance is building.',
+    situation: 'The rush was intense, but cravings return mid-week. Weekly allowance ($25) covers the dealer.',
+    logMessage: 'Weekly allowance ($25) covers pills.',
     statEffects: {
       cashDelta: -25,
       addictionDelta: 15,
@@ -31,7 +31,7 @@ export const STORY_NODES: Record<string, StoryNode> = {
     },
     choices: [
       {
-        text: 'Keep taking it (Allowance covers it)',
+        text: 'Buy more with allowance',
         targetNodeId: 'ALLOWANCE_COVER_2',
         btnClass: 'default',
       },
@@ -40,15 +40,15 @@ export const STORY_NODES: Record<string, StoryNode> = {
 
   'ALLOWANCE_COVER_2': {
     id: 'ALLOWANCE_COVER_2',
-    stageTitle: 'SCHOOL // TOLERANCE ESCALATION',
+    stageTitle: 'SCHOOL // TOLERANCE',
     age: 'Age 16',
-    situation: 'One pill no longer does anything. You now need three just to stay awake in class. You drain your entire allowance ($30), skipping lunch all week. Your grades are slipping and your hands tremble during morning quizzes.',
-    logMessage: 'Allowance completely drained. Tolerance doubled.',
+    situation: 'Tolerance doubles. Allowance drained skipping meals. Trembling in morning classes.',
+    logMessage: 'Tolerance rising. Skipping meals.',
     statEffects: {
       cashDelta: -30,
       addictionDelta: 20,
       healthDelta: -5,
-      dosesDelta: 2,
+      dosesDelta: 1,
     },
     choices: [
       {
@@ -62,22 +62,22 @@ export const STORY_NODES: Record<string, StoryNode> = {
   // --- SHORTAGE & BORROWING BRANCH ---
   'SHORTAGE_ASK_PARENT': {
     id: 'SHORTAGE_ASK_PARENT',
-    stageTitle: 'SHORTAGE // WITHDRAWAL HITS',
+    stageTitle: 'SHORTAGE // WITHDRAWAL',
     age: 'Age 16',
-    situation: 'You are completely broke ($0). Intense chills, cold sweats, and nausea wrack your body. The dealer refuses to front you another capsule. You need cash immediately. Do you ask your parents?',
-    logMessage: 'Hit zero balance. Suffering withdrawal symptoms.',
+    situation: 'Broke ($0). Chills, sweating, and tremors hit. Dealer cuts you off without cash.',
+    logMessage: 'Hit $0 balance. Withdrawal symptoms.',
     statEffects: {
       healthDelta: -8,
       addictionDelta: 10,
     },
     choices: [
       {
-        text: 'Ask parents for emergency money ("Yes, I need school fees")',
+        text: 'Ask parents for emergency money',
         targetNodeId: 'PARENT_GIVES_LESS',
         btnClass: 'default',
       },
       {
-        text: 'No (Do not ask parents; seek street alternatives)',
+        text: 'No (Seek street cash)',
         targetNodeId: 'LOAN_SHARK_APPEARS',
         btnClass: 'danger',
       },
@@ -86,10 +86,10 @@ export const STORY_NODES: Record<string, StoryNode> = {
 
   'PARENT_GIVES_LESS': {
     id: 'PARENT_GIVES_LESS',
-    stageTitle: 'FAMILY // GROWING SUSPICIONS',
+    stageTitle: 'FAMILY // SUSPICIONS',
     age: 'Age 16',
-    situation: 'Your parents look at your bloodshot eyes and pale skin. They refuse the $50 you requested, but reluctantly give you $15 for "school lunches", warning that money does not grow on trees.',
-    logMessage: 'Parents gave $15 (less than requested). Suspicion growing.',
+    situation: 'Parents notice bloodshot eyes. They refuse $50, but hand over $15 with a strict warning.',
+    logMessage: 'Parents gave $15 (less than needed).',
     statEffects: {
       cashDelta: 15,
       addictionDelta: 5,
@@ -97,12 +97,12 @@ export const STORY_NODES: Record<string, StoryNode> = {
     },
     choices: [
       {
-        text: 'Ask parents again? ("No, $15 is not enough!")',
+        text: 'Ask parents again',
         targetNodeId: 'FRIEND_ASK',
         btnClass: 'warning',
       },
       {
-        text: 'Turn to a close friend instead',
+        text: 'Turn to a friend',
         targetNodeId: 'FRIEND_ASK',
         btnClass: 'default',
       },
@@ -111,10 +111,10 @@ export const STORY_NODES: Record<string, StoryNode> = {
 
   'FRIEND_ASK': {
     id: 'FRIEND_ASK',
-    stageTitle: 'FRIENDS // BEGGING FOR CASH',
+    stageTitle: 'FRIENDS // BEGGING',
     age: 'Age 17',
-    situation: 'Parents locked their wallets and threatened drug testing. Shivering and frantic, you corner your best friend outside the cafeteria, making up a story about losing your transport card.',
-    logMessage: 'Turned to friend for cash.',
+    situation: 'Parents locked their wallets. Shivering outside cafeteria, begging your best friend for cash.',
+    logMessage: 'Turned to friend for money.',
     choices: [
       {
         text: 'Borrow from friend',
@@ -128,20 +128,20 @@ export const STORY_NODES: Record<string, StoryNode> = {
     id: 'FRIEND_GIVES_LESS',
     stageTitle: 'FRIENDS // BRIDGES BURNING',
     age: 'Age 17',
-    situation: 'Your friend hands you $10—all the bus fare they have left. "You look sick, man. What\'s happening to you?" The $10 barely buys a single cheap adulterated capsule. Do you press them for more?',
-    logMessage: 'Friend lent $10 (less). Relationship strained.',
+    situation: 'Friend lends $10 bus fare: "You look sick, man." Barely covers half a dose.',
+    logMessage: 'Friend lent $10. Trust fraying.',
     statEffects: {
       cashDelta: 10,
       addictionDelta: 10,
     },
     choices: [
       {
-        text: 'No (Friend notices your erratic behavior and cuts contact)',
+        text: 'No (Friend cuts contact)',
         targetNodeId: 'LOAN_SHARK_APPEARS',
         btnClass: 'danger',
       },
       {
-        text: 'Beg for more ("Come on, you have savings!")',
+        text: 'Beg for more',
         targetNodeId: 'LOAN_SHARK_APPEARS',
         btnClass: 'warning',
       },
@@ -153,16 +153,16 @@ export const STORY_NODES: Record<string, StoryNode> = {
     id: 'LOAN_SHARK_APPEARS',
     stageTitle: 'STREETS // THE LOAN SHARK',
     age: 'Age 17',
-    situation: 'Alone, sweating, and abandoned outside the school gates. A sleek black car stops at the curb. A scarred man rolls down the window: "Heard you\'re in a bind, kid. I can give you $300 cash right now. Just pay me back next week."',
+    situation: 'Shivering outside school. Black car stops: "Heard you need cash, kid. $300 today, weekly interest."',
     logMessage: 'Loan shark offers predatory cash advance.',
     choices: [
       {
-        text: 'Accept the loan ($300 advance with high interest)',
+        text: 'Take predatory loan ($300)',
         targetNodeId: 'LOAN_COVER_1',
         btnClass: 'warning',
       },
       {
-        text: 'No (Refuse the loan shark)',
+        text: 'No (Refuse loan shark)',
         targetNodeId: 'ENDING_COLLAPSE_EARLY',
         btnClass: 'danger',
       },
@@ -171,10 +171,10 @@ export const STORY_NODES: Record<string, StoryNode> = {
 
   'ENDING_COLLAPSE_EARLY': {
     id: 'ENDING_COLLAPSE_EARLY',
-    stageTitle: 'COLLAPSE // MEDICAL EMERGENCY',
+    stageTitle: 'COLLAPSE // ACUTE WITHDRAWAL',
     age: 'Age 17',
-    situation: 'Having refused the loan and unable to secure any relief, acute neurochemical withdrawal triggers severe convulsions. You collapse unconscious on the concrete. An ambulance rushes you to the intensive care unit. Your youth is ruined.',
-    logMessage: 'Collapsed in seizures from acute withdrawal. Rushed to ICU.',
+    situation: 'Without money or doses, acute withdrawal seizures strike. You collapse on the concrete. Rushed to ICU.',
+    logMessage: 'Seizure collapse from acute withdrawal.',
     isEnding: true,
     endingReason: 'Severe Withdrawal & Neurological Collapse',
     choices: [],
@@ -182,20 +182,20 @@ export const STORY_NODES: Record<string, StoryNode> = {
 
   'LOAN_COVER_1': {
     id: 'LOAN_COVER_1',
-    stageTitle: 'DEBT // TEMPORARY RELIEF',
+    stageTitle: 'DEBT // TEMPORARY FIX',
     age: 'Age 17',
-    situation: 'With $300 in your pocket, you go on a 5-day binge. You stop attending school entirely. But the loan shark\'s enforcer knocks on your apartment window: "Interest compounded. You now owe $600."',
-    logMessage: 'Binge lasted 5 days. Debt increased to $600.',
+    situation: 'Cash bought a binge. Loan shark texts: "Payment due with interest ($600)."',
+    logMessage: 'Binge over. Debt spiked to $600.',
     statEffects: {
       cashDelta: 300,
       debtDelta: 600,
       addictionDelta: 25,
       healthDelta: -10,
-      dosesDelta: 3,
+      dosesDelta: 2,
     },
     choices: [
       {
-        text: 'Borrow more to cover the interest (Loan cover)',
+        text: 'Borrow more to cover interest',
         targetNodeId: 'LOAN_COVER_2',
         btnClass: 'warning',
       },
@@ -206,8 +206,8 @@ export const STORY_NODES: Record<string, StoryNode> = {
     id: 'LOAN_COVER_2',
     stageTitle: 'DEBT // THE AVALANCHE',
     age: 'Age 17',
-    situation: 'You borrow again to pay off the first enforcer. The trap snaps shut. Your total debt has ballooned to $3,000. You are emaciated, living off convenience store scraps, hiding from your family.',
-    logMessage: 'Borrowed again. Debt snowballed to $3,000.',
+    situation: 'Borrowed again. Total debt snowballed to $3,000. Emaciated and hiding from family.',
+    logMessage: 'Debt snowballed to $3,000.',
     statEffects: {
       debtDelta: 2400,
       addictionDelta: 15,
@@ -215,7 +215,7 @@ export const STORY_NODES: Record<string, StoryNode> = {
     },
     choices: [
       {
-        text: 'Ask the loan shark for more credit',
+        text: 'Ask loan shark for more credit',
         targetNodeId: 'LOAN_SHARK_CUTOFF',
         btnClass: 'danger',
       },
@@ -224,17 +224,17 @@ export const STORY_NODES: Record<string, StoryNode> = {
 
   'LOAN_SHARK_CUTOFF': {
     id: 'LOAN_SHARK_CUTOFF',
-    stageTitle: 'THREAT // NO MORE LOANS',
+    stageTitle: 'THREAT // CUT OFF',
     age: 'Age 18',
-    situation: '"No more loans, junkie!" Two heavy syndicate enforcers kick down your door and drag you to an underground garage. "You owe $3,000. Since you have no cash, you are going to work as our debt collector muscle. You refuse? We break your legs right now."',
-    logMessage: 'Cornered by syndicate enforcers. Forced to collect debts.',
+    situation: '"No more loans!" Enforcers corner you: "You owe $3,000. Collect debts for us or we break your legs."',
+    logMessage: 'Cornered by mob. Forced into debt collection.',
     statEffects: {
       healthDelta: -10,
       dosesDelta: 1,
     },
     choices: [
       {
-        text: 'Join the syndicate to cover debt',
+        text: 'Join syndicate to work off debt',
         targetNodeId: 'STAGE_FIGHT_1_INTRO',
         btnClass: 'danger',
       },
@@ -244,21 +244,21 @@ export const STORY_NODES: Record<string, StoryNode> = {
   // --- DEBT COLLECTION (SHADOW FIGHTER MINIGAME) ---
   'STAGE_FIGHT_1_INTRO': {
     id: 'STAGE_FIGHT_1_INTRO',
-    stageTitle: 'ENFORCER // CORNER STORE OWNER',
+    stageTitle: 'ENFORCER // CORNER GROCERY',
     age: 'Age 18',
-    situation: 'Target: A weary corner grocery shopkeeper who missed his protection payment. The enforcers toss you a pill: "Take this dose to boost your reflexes if you get tired, kid. Make sure he pays."',
-    logMessage: 'Assigned to collect debt from Shopkeeper. Minigame ready.',
+    situation: 'Target: Storekeeper behind on protection fee. Syndicate tosses a pill: "Take this and make him pay."',
+    logMessage: 'Assigned to collect from Shopkeeper.',
     statEffects: {
       dosesDelta: 1,
     },
     choices: [
       {
-        text: 'Fight the Shopkeeper (Enter Shadow Combat)',
+        text: 'Fight the Shopkeeper',
         action: { type: 'FIGHT', level: 1 },
         btnClass: 'danger',
       },
       {
-        text: 'No (Refuse to beat him / Back down)',
+        text: 'No (Refuse / Back down)',
         targetNodeId: 'KICKED_OUT_TO_THIEVES',
         btnClass: 'warning',
       },
@@ -267,10 +267,10 @@ export const STORY_NODES: Record<string, StoryNode> = {
 
   'STAGE_FIGHT_2_INTRO': {
     id: 'STAGE_FIGHT_2_INTRO',
-    stageTitle: 'ENFORCER // UNDERGROUND GAMBLER',
+    stageTitle: 'ENFORCER // GAMBLING DEN',
     age: 'Age 18',
-    situation: 'You squeezed money out of the shopkeeper. The bosses hand you a cut and another dose. Next target: An aggressive underground gambler armed with an iron bar.',
-    logMessage: 'Earned syndicate cut. Assigned to Gambler target.',
+    situation: 'Target: Underground gambler who owes $1,500. Armed with an iron pipe.',
+    logMessage: 'Assigned to Gambler target.',
     statEffects: {
       cashDelta: 400,
       debtDelta: -400,
@@ -278,12 +278,12 @@ export const STORY_NODES: Record<string, StoryNode> = {
     },
     choices: [
       {
-        text: 'Fight the Gambler (Enter Shadow Combat)',
+        text: 'Fight the Gambler',
         action: { type: 'FIGHT', level: 2 },
         btnClass: 'danger',
       },
       {
-        text: 'No (Flee the syndicate)',
+        text: 'No (Flee syndicate)',
         targetNodeId: 'KICKED_OUT_TO_THIEVES',
         btnClass: 'warning',
       },
@@ -292,9 +292,9 @@ export const STORY_NODES: Record<string, StoryNode> = {
 
   'STAGE_FIGHT_3_INTRO': {
     id: 'STAGE_FIGHT_3_INTRO',
-    stageTitle: 'ENFORCER // ROGUE BOUNCER',
+    stageTitle: 'ENFORCER // WAREHOUSE',
     age: 'Age 18',
-    situation: 'The gambler fell. Your body aches all over, and your heart is beating with a sickening flutter. Final syndicate target: A towering warehouse bouncer hiding stolen syndicate cash.',
+    situation: 'Final target: Towering warehouse bouncer hiding stolen syndicate cash. Heart palpitating.',
     logMessage: 'Assigned to final target: Rogue Bouncer.',
     statEffects: {
       cashDelta: 600,
@@ -303,12 +303,12 @@ export const STORY_NODES: Record<string, StoryNode> = {
     },
     choices: [
       {
-        text: 'Fight the Bouncer (Final Debt Collection)',
+        text: 'Fight the Bouncer',
         action: { type: 'FIGHT', level: 3 },
         btnClass: 'danger',
       },
       {
-        text: 'No (Drop your weapon and run)',
+        text: 'No (Drop weapon & run)',
         targetNodeId: 'KICKED_OUT_TO_THIEVES',
         btnClass: 'warning',
       },
@@ -319,16 +319,16 @@ export const STORY_NODES: Record<string, StoryNode> = {
     id: 'POLICE_RAID',
     stageTitle: 'CRISIS // POLICE RAID!',
     age: 'Age 18',
-    situation: 'The bouncer crashes to the floor. Suddenly, heavy boots stomp outside! Flashbang grenades detonate, and blue/red strobe lights shatter the darkness! "POLICE! ON YOUR KNEES! DON\'T MOVE!"',
-    logMessage: 'Warehouse raided by SWAT and Narcotics division!',
+    situation: 'Doors blown open! Flashbangs explode, sirens scream: "POLICE! ON YOUR KNEES!"',
+    logMessage: 'Warehouse raided by SWAT narcotics squad!',
     choices: [
       {
-        text: 'Run! Leap through the shattered window!',
+        text: 'Run! Leap through fire escape window!',
         targetNodeId: 'THIEVES_STAGE_INTRO',
         btnClass: 'danger',
       },
       {
-        text: 'No (Surrender / Freeze in place)',
+        text: 'No (Surrender to police)',
         targetNodeId: 'ENDING_ARRESTED',
         btnClass: 'warning',
       },
@@ -337,10 +337,10 @@ export const STORY_NODES: Record<string, StoryNode> = {
 
   'ENDING_ARRESTED': {
     id: 'ENDING_ARRESTED',
-    stageTitle: 'ARRESTED // PRISON ENDING',
+    stageTitle: 'ARRESTED // INCARCERATED',
     age: 'Age 18',
-    situation: 'SWAT tackles you to the concrete. You are charged with aggravated assault, armed racketeering, and distribution of controlled substances. The judge sentences you to maximum security. Your life ends in a sterile concrete cell.',
-    logMessage: 'Arrested by Police. Incarcerated in federal prison.',
+    situation: 'Tackled to the concrete. Sentenced to maximum security for syndicate extortion.',
+    logMessage: 'Arrested by Police. Incarcerated.',
     isEnding: true,
     endingReason: 'Arrested & Incarcerated for Syndicate Extortion',
     choices: [],
@@ -348,17 +348,17 @@ export const STORY_NODES: Record<string, StoryNode> = {
 
   'KICKED_OUT_TO_THIEVES': {
     id: 'KICKED_OUT_TO_THIEVES',
-    stageTitle: 'EXILE // DUMPED IN THE ALLEY',
+    stageTitle: 'EXILE // DUMPED IN ALLEY',
     age: 'Age 18',
-    situation: 'You failed to collect the debt. The syndicate enforcers beat you relentlessly, strip you of your belongings, and dump you in a rainy back alley. "Useless junkie. If you show your face here again, you\'re dead."',
-    logMessage: 'Cast out by syndicate enforcers. Stripped of all money.',
+    situation: 'Failed the job. Enforcers beat you bloody and dump you in the rain: "Useless junk. Next time you die."',
+    logMessage: 'Dumped in rainy alley by syndicate.',
     statEffects: {
       healthDelta: -20,
       cashDelta: -100,
     },
     choices: [
       {
-        text: 'Stumble into the night (Thieves stage)',
+        text: 'Stumble into the night',
         targetNodeId: 'THIEVES_STAGE_INTRO',
         btnClass: 'danger',
       },
@@ -368,22 +368,22 @@ export const STORY_NODES: Record<string, StoryNode> = {
   // --- THIEVES STAGE (PARKOUR RUNNER MINIGAME) ---
   'THIEVES_STAGE_INTRO': {
     id: 'THIEVES_STAGE_INTRO',
-    stageTitle: 'DESPERATION // THIEVES STAGE',
+    stageTitle: 'DESPERATION // STREET THEFT',
     age: 'Age 19',
-    situation: 'Abandoned by family, hunted by police, exiled by the mob. Severe physical addiction has destroyed your body—your organs throb with dull pain. To buy your next dose and survive the night, you have to snatch bags and parkour across alleyways and rooftops.',
-    logMessage: 'Entered Thieves Stage. Physical deterioration noticeable.',
+    situation: 'Exiled, hunted, and sick. Organs ache from chronic abuse. Only way to survive is snatching bags.',
+    logMessage: 'Entered Thieves Stage.',
     statEffects: {
       healthDelta: -10,
       dosesDelta: 1,
     },
     choices: [
       {
-        text: 'Begin Getaway (Alley Snatch & Sprint)',
+        text: 'Begin Getaway (Alley Sprint)',
         action: { type: 'ROB', level: 1 },
         btnClass: 'danger',
       },
       {
-        text: 'No (Refuse to rob, collapse in exhaustion)',
+        text: 'No (Collapse in rain)',
         targetNodeId: 'ENDING_COLLAPSE_STREET',
         btnClass: 'warning',
       },
@@ -392,10 +392,10 @@ export const STORY_NODES: Record<string, StoryNode> = {
 
   'ENDING_COLLAPSE_STREET': {
     id: 'ENDING_COLLAPSE_STREET',
-    stageTitle: 'COLLAPSE // PAVEMENT FATALITY',
+    stageTitle: 'COLLAPSE // STREET FATALITY',
     age: 'Age 19',
-    situation: 'Unable to run and starved of basic care, your exhausted heart gives out. You collapse beside a dumpster in the freezing rain. By the time street sweepers find you in the morning, your body has gone cold.',
-    logMessage: 'Collapsed from acute physical exhaustion on city pavement.',
+    situation: 'Body gives out in a freezing alley. Hypothermia and cardiovascular failure.',
+    logMessage: 'Collapsed on city pavement.',
     isEnding: true,
     endingReason: 'Hypothermia & Cardiovascular Failure',
     choices: [],
@@ -403,10 +403,10 @@ export const STORY_NODES: Record<string, StoryNode> = {
 
   'STAGE_ROB_2_INTRO': {
     id: 'STAGE_ROB_2_INTRO',
-    stageTitle: 'THIEVES // PENTHOUSE ROOFTOPS',
+    stageTitle: 'THIEVES // ROOFTOPS',
     age: 'Age 19',
-    situation: 'You got away from the first snatch, but spent the loot immediately on lethal street-grade cuts. Your vision is blurring at the edges. Your lungs burn like fire. Target: Cash box inside a rooftop penthouse office.',
-    logMessage: 'First getaway successful. Heading to Rooftop Heist.',
+    situation: 'Loot spent on street cuts. Lungs burn and vision tunnels. Target: Penthouse cash box.',
+    logMessage: 'Heading to Rooftop Heist.',
     statEffects: {
       cashDelta: 200,
       addictionDelta: 20,
@@ -420,7 +420,7 @@ export const STORY_NODES: Record<string, StoryNode> = {
         btnClass: 'danger',
       },
       {
-        text: 'No (Body gives out, collapse)',
+        text: 'No (Collapse)',
         targetNodeId: 'ENDING_COLLAPSE_OD',
         btnClass: 'warning',
       },
@@ -429,10 +429,10 @@ export const STORY_NODES: Record<string, StoryNode> = {
 
   'ENDING_COLLAPSE_OD': {
     id: 'ENDING_COLLAPSE_OD',
-    stageTitle: 'OVERDOSE // RESPIRATORY FAILURE',
+    stageTitle: 'OVERDOSE // RESPIRATORY COLLAPSE',
     age: 'Age 19',
-    situation: 'The toxic adulterants overwhelm your failing liver and kidneys. You trip on the roof shingles, foaming at the mouth, unable to draw breath. The neon skyline of the city fades into pitch black.',
-    logMessage: 'Fatal overdose caused acute respiratory arrest.',
+    situation: 'Street adulterants trigger acute respiratory arrest. You slip into a fatal coma on the roof.',
+    logMessage: 'Fatal overdose caused respiratory arrest.',
     isEnding: true,
     endingReason: 'Fatal Toxicity & Respiratory Collapse',
     choices: [],
@@ -440,22 +440,22 @@ export const STORY_NODES: Record<string, StoryNode> = {
 
   'STAGE_ROB_3_INTRO': {
     id: 'STAGE_ROB_3_INTRO',
-    stageTitle: 'CLIMAX // THE FINAL GETAWAY',
+    stageTitle: 'CLIMAX // FINAL GETAWAY',
     age: 'Age 19',
-    situation: 'Police search helicopters hover overhead, painting the high-rises in stark white spotlights. Sirens scream from every corner. Your body is running on toxic fumes, heart pounding at dangerous extremes. Escape across the city cranes!',
-    logMessage: 'High-stakes rooftop getaway under helicopter spotlights.',
+    situation: 'Search helicopters illuminate high-rises. Running on pure toxic fumes and adrenaline.',
+    logMessage: 'Final rooftop escape under spotlights.',
     statEffects: {
       healthDelta: -15,
       dosesDelta: 1,
     },
     choices: [
       {
-        text: 'Sprint for your life! (Final Parkour Run)',
+        text: 'Sprint for your life!',
         action: { type: 'ROB', level: 3 },
         btnClass: 'danger',
       },
       {
-        text: 'No (Stop running, let the police catch you)',
+        text: 'No (Give up)',
         targetNodeId: 'ENDING_ARRESTED',
         btnClass: 'warning',
       },
@@ -464,10 +464,10 @@ export const STORY_NODES: Record<string, StoryNode> = {
 
   'CLIMAX_ESCAPE': {
     id: 'CLIMAX_ESCAPE',
-    stageTitle: 'COLLAPSE // THE FINAL HEARTBEAT',
+    stageTitle: 'COLLAPSE // FINAL HEARTBEAT',
     age: 'Age 19',
-    situation: 'You leap past the final fire escape onto a dark water tower platform. The sirens echo below you. You hold the stolen cash against your trembling chest... but suddenly, an excruciating pain seizes your heart. The entire world starts flickering.',
-    logMessage: 'Reached end of final escape. Cardiovascular arrest imminent.',
+    situation: 'Leaped past fire escape onto water tower. Stolen cash in hand... agonizing pain seizes your chest.',
+    logMessage: 'Cardiovascular collapse imminent.',
     choices: [
       {
         text: 'Gasp for breath...',

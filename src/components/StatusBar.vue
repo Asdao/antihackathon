@@ -146,11 +146,11 @@ const staminaColor = computed(() => {
 <style scoped>
 .status-bar-container {
   background-color: var(--retro-bg-darkest);
-  border-bottom: 3px solid var(--retro-accent);
-  padding: 8px 12px;
+  border-bottom: 2px solid var(--retro-accent);
+  padding: 4px 8px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
   z-index: 10;
 }
 
@@ -159,15 +159,15 @@ const staminaColor = computed(() => {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px dashed var(--retro-bg-dark);
-  padding-bottom: 6px;
+  padding-bottom: 2px;
 }
 
 .sys-title {
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 1px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .blinking-dot {

@@ -45,7 +45,8 @@ const { state } = useGameState();
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: calc(100% - 90px);
+  height: 100%;
+  min-height: 0;
   overflow: hidden;
   position: relative;
 }
