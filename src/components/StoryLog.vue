@@ -44,7 +44,7 @@ function handleChoice(choice: StoryChoice) {
           }"
           @click="handleChoice(choice)"
         >
-          <span class="choice-num">{{ idx + 1 }}.</span>
+          <span class="choice-num">▶</span>
           <span class="choice-label">{{ choice.text }}</span>
         </button>
       </div>
@@ -54,7 +54,6 @@ function handleChoice(choice: StoryChoice) {
     <div class="history-panel">
       <div class="history-header">
         <span>LIFE TIMELINE / LOG ARCHIVE</span>
-        <span class="history-count">({{ state.logs.length }} events)</span>
       </div>
 
       <div class="history-list retro-scroll">

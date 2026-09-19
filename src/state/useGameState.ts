@@ -10,6 +10,7 @@ const defaultStats = (): PlayerStats => ({
   stamina: 100,
   addiction: 0,
   tolerance: 0,
+  drugCost: 25,
   doses: 0,
   age: 'Age 16',
   boostActive: false,
@@ -72,6 +73,15 @@ export function useGameState() {
     if (deltas.addictionDelta) s.addiction = Math.max(0, Math.min(100, s.addiction + deltas.addictionDelta));
     if (deltas.dosesDelta) s.doses = Math.max(0, s.doses + deltas.dosesDelta);
 
+    // Compounding Predatory Debt: Debt keeps multiplying with weekly extortionate rates
+    if (s.debt > 0) {
+      const interest = Math.round(s.debt * 0.08 + 45);
+      s.debt += interest;
+    }
+
+    // Escalating Drug Cost: Tolerance and street desperation drive price through the roof
+    s.drugCost = Math.round(25 + s.addiction * 4.5 + s.tolerance * 6);
+
     if (s.health <= 0 && state.mode !== 'ENDING_SEQUENCE') {
       soundManager.playGlitch();
       addLog('Vital organs collapsed due to chronic substance abuse.', 'danger');
@@ -93,6 +103,7 @@ export function useGameState() {
     s.addiction = Math.min(100, s.addiction + 10);
     s.tolerance = Math.min(100, s.tolerance + 5);
     s.health = Math.max(5, s.health - 4);
+    s.drugCost = Math.round(25 + s.addiction * 4.5 + s.tolerance * 6);
 
     soundManager.playDrugBoost();
     addLog('Consumed drug dose: Surge activated!', 'warning');
@@ -129,11 +140,11 @@ export function useGameState() {
       if (type === 'FIGHT') {
         state.currentFightLevel = choice.action.level;
         state.mode = 'SHADOW_FIGHTER';
-        addLog(`Engaging Target ${choice.action.level} in Shadow Combat.`, 'warning');
+        addLog('Engaging target in shadow combat.', 'warning');
       } else if (type === 'ROB') {
         state.currentRobLevel = choice.action.level;
         state.mode = 'PARKOUR_RUNNER';
-        addLog(`Initiating Robbery ${choice.action.level}.`, 'danger');
+        addLog('Initiating getaway run.', 'danger');
       } else if (type === 'CINEMATIC') {
         state.mode = 'ENDING_SEQUENCE';
       }

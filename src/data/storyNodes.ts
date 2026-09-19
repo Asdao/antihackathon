@@ -244,9 +244,9 @@ export const STORY_NODES: Record<string, StoryNode> = {
   // --- DEBT COLLECTION (SHADOW FIGHTER MINIGAME) ---
   'STAGE_FIGHT_1_INTRO': {
     id: 'STAGE_FIGHT_1_INTRO',
-    stageTitle: 'ENFORCER // TARGET 1: GROCERY OWNER',
+    stageTitle: 'ENFORCER // CORNER STORE OWNER',
     age: 'Age 18',
-    situation: 'Target 1: A weary corner grocery shopkeeper who missed his weekly protection fee. The enforcers toss you a pill: "Take this dose to boost your reflexes if you get tired, kid. Beat him until he pays."',
+    situation: 'Target: A weary corner grocery shopkeeper who missed his protection payment. The enforcers toss you a pill: "Take this dose to boost your reflexes if you get tired, kid. Make sure he pays."',
     logMessage: 'Assigned to collect debt from Shopkeeper. Minigame ready.',
     statEffects: {
       dosesDelta: 1,
@@ -267,10 +267,10 @@ export const STORY_NODES: Record<string, StoryNode> = {
 
   'STAGE_FIGHT_2_INTRO': {
     id: 'STAGE_FIGHT_2_INTRO',
-    stageTitle: 'ENFORCER // TARGET 2: GAMBLER',
+    stageTitle: 'ENFORCER // UNDERGROUND GAMBLER',
     age: 'Age 18',
-    situation: 'You squeezed $400 out of the shopkeeper. The bosses hand you a cut and a bonus dose. Next target: An aggressive underground gambler who owes $1,500. He is armed with an iron bar.',
-    logMessage: 'Earned $400 cut. Assigned to Gambler target.',
+    situation: 'You squeezed money out of the shopkeeper. The bosses hand you a cut and another dose. Next target: An aggressive underground gambler armed with an iron bar.',
+    logMessage: 'Earned syndicate cut. Assigned to Gambler target.',
     statEffects: {
       cashDelta: 400,
       debtDelta: -400,
@@ -292,9 +292,9 @@ export const STORY_NODES: Record<string, StoryNode> = {
 
   'STAGE_FIGHT_3_INTRO': {
     id: 'STAGE_FIGHT_3_INTRO',
-    stageTitle: 'ENFORCER // TARGET 3: BOUNCER',
+    stageTitle: 'ENFORCER // ROGUE BOUNCER',
     age: 'Age 18',
-    situation: 'The gambler fell. Your body aches all over, and your heart is beating with a sickening flutter. Final syndicate target: A towering warehouse bouncer hiding $3,000 in stolen cash.',
+    situation: 'The gambler fell. Your body aches all over, and your heart is beating with a sickening flutter. Final syndicate target: A towering warehouse bouncer hiding stolen syndicate cash.',
     logMessage: 'Assigned to final target: Rogue Bouncer.',
     statEffects: {
       cashDelta: 600,
@@ -339,8 +339,8 @@ export const STORY_NODES: Record<string, StoryNode> = {
     id: 'ENDING_ARRESTED',
     stageTitle: 'ARRESTED // PRISON ENDING',
     age: 'Age 18',
-    situation: 'SWAT tackles you to the concrete. You are charged with aggravated assault, armed racketeering, and distribution of controlled substances. The judge sentences you to 14 years in maximum security. Your life ends in a sterile concrete cell.',
-    logMessage: 'Arrested by Police. Sentenced to 14 years in federal prison.',
+    situation: 'SWAT tackles you to the concrete. You are charged with aggravated assault, armed racketeering, and distribution of controlled substances. The judge sentences you to maximum security. Your life ends in a sterile concrete cell.',
+    logMessage: 'Arrested by Police. Incarcerated in federal prison.',
     isEnding: true,
     endingReason: 'Arrested & Incarcerated for Syndicate Extortion',
     choices: [],
@@ -378,7 +378,7 @@ export const STORY_NODES: Record<string, StoryNode> = {
     },
     choices: [
       {
-        text: 'Begin Robbery 1 (Alley Snatch & Sprint)',
+        text: 'Begin Getaway (Alley Snatch & Sprint)',
         action: { type: 'ROB', level: 1 },
         btnClass: 'danger',
       },
@@ -403,10 +403,10 @@ export const STORY_NODES: Record<string, StoryNode> = {
 
   'STAGE_ROB_2_INTRO': {
     id: 'STAGE_ROB_2_INTRO',
-    stageTitle: 'THIEVES // ROBBERY 2: ROOFTOPS',
+    stageTitle: 'THIEVES // PENTHOUSE ROOFTOPS',
     age: 'Age 19',
-    situation: 'You got away with $200 from the first snatch, but spent it immediately on lethal street-grade cuts. Your vision is blurring at the edges. Your lungs burn like fire. Target: Cash box inside a rooftop penthouse office.',
-    logMessage: 'Robbery 1 successful. Heading to Rooftop Heist.',
+    situation: 'You got away from the first snatch, but spent the loot immediately on lethal street-grade cuts. Your vision is blurring at the edges. Your lungs burn like fire. Target: Cash box inside a rooftop penthouse office.',
+    logMessage: 'First getaway successful. Heading to Rooftop Heist.',
     statEffects: {
       cashDelta: 200,
       addictionDelta: 20,
@@ -415,7 +415,7 @@ export const STORY_NODES: Record<string, StoryNode> = {
     },
     choices: [
       {
-        text: 'Begin Robbery 2 (Rooftop Parkour)',
+        text: 'Begin Getaway (Rooftop Parkour)',
         action: { type: 'ROB', level: 2 },
         btnClass: 'danger',
       },
@@ -440,10 +440,10 @@ export const STORY_NODES: Record<string, StoryNode> = {
 
   'STAGE_ROB_3_INTRO': {
     id: 'STAGE_ROB_3_INTRO',
-    stageTitle: 'CLIMAX // ROBBERY 3: THE FINAL RUN',
+    stageTitle: 'CLIMAX // THE FINAL GETAWAY',
     age: 'Age 19',
     situation: 'Police search helicopters hover overhead, painting the high-rises in stark white spotlights. Sirens scream from every corner. Your body is running on toxic fumes, heart pounding at dangerous extremes. Escape across the city cranes!',
-    logMessage: 'Target 3: High-stakes rooftop getaway under helicopter spotlights.',
+    logMessage: 'High-stakes rooftop getaway under helicopter spotlights.',
     statEffects: {
       healthDelta: -15,
       dosesDelta: 1,

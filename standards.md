@@ -65,3 +65,22 @@ This project is built on the principle of **radical minimalism**: maximizing nar
    All audio effects build upon reusable primitives (`playTone`, `playNoise`) with automatic exponential gain ramp-downs to prevent speaker popping or clicks.
 3. **Continuous Audio Lifecycle**:
    Standing oscillators (such as the flatline tone or siren intervals) must provide idempotent stop handlers (`stopSirens()`, `stopFlatline()`).
+
+---
+
+## 5. UI Design Rule: No Numerical Counts
+
+1. **Visual State Over Numbers**:
+   Avoid raw numerical counters in HUDs and story choices (e.g. avoid `Tripped: 1/3`, `Doses: x2`, `Target 1`, `Robbery 2`, `85% HP`).
+2. **Qualitative & Meter-Based Feedback**:
+   Represent player condition using color-coded status badges (`NOMINAL`, `VULNERABLE`, `CRITICAL`), retro visual progress bars, and thematic stage names (`CORNER GROCERY`, `GAMBLING DEN`, `ALLEYWAY SPRINT`).
+
+---
+
+## 6. Narrative Economy & Escalation Mechanics
+
+1. **Compounding Predatory Debt**:
+   Any outstanding loan shark debt must automatically compound with interest on every player decision, simulating extortionate loan sharks.
+2. **Dynamic Substance Inflation**:
+   Drug acquisition cost is not static—it dynamically increases with the player's tolerance and addiction levels, driving the player deeper into financial desperation.
+

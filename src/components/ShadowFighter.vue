@@ -8,11 +8,11 @@ const { state, onFightComplete, triggerDrugBoost } = useGameState();
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 let animationFrameId: number | null = null;
 
-// Target configurations for the 3 stages
+// Target configurations for diverse opponents
 const targetConfigs = [
   {
     name: 'CORNER STORE OWNER',
-    title: 'TARGET 1 // UNPAID PROTECTION FEE',
+    title: 'CORNER GROCERY // OVERDUE DEBT',
     maxHp: 80,
     dmg: 8,
     speed: 0.015,
@@ -21,7 +21,7 @@ const targetConfigs = [
   },
   {
     name: 'UNDERGROUND GAMBLER',
-    title: 'TARGET 2 // DEBT $1,500',
+    title: 'GAMBLING DEN // COMPOUNDING LOAN',
     maxHp: 110,
     dmg: 14,
     speed: 0.022,
@@ -30,7 +30,7 @@ const targetConfigs = [
   },
   {
     name: 'ROGUE WAREHOUSE BOUNCER',
-    title: 'TARGET 3 // EMBEZZLED SYNDICATE STASH',
+    title: 'WAREHOUSE // SYNDICATE ENFORCER',
     maxHp: 150,
     dmg: 20,
     speed: 0.028,
@@ -336,7 +336,7 @@ function render() {
   animationFrameId = requestAnimationFrame(render);
 }
 
-// Procedural Silhouette Fighter Drawing (Shadow Style)
+// Procedural Silhouette Fighter Drawing (Diverse Opponents, Transparent Arm Borders, Pixelated Joints)
 function drawSilhouetteFighter(
   ctx: CanvasRenderingContext2D,
   x: number,
@@ -348,81 +348,146 @@ function drawSilhouetteFighter(
   build: string = 'medium'
 ) {
   ctx.save();
-  ctx.translate(x, groundY);
+  ctx.translate(Math.round(x), Math.round(groundY));
 
   // Flip opponent to face left
   if (!isPlayer) {
     ctx.scale(-1, 1);
   }
 
-  // Color selection: Pitch black silhouette, flashing red if hit/telegraphing, cyan aura if boosted
   if (isBoosted) {
     ctx.shadowColor = '#00ffff';
-    ctx.shadowBlur = 12;
+    ctx.shadowBlur = 14;
   }
+
+  // Background cutout color used for transparent separation borders between limbs
+  const cutoutColor = '#102210';
+  let silColor = isPlayer ? '#050a05' : '#030603';
 
   if (isTelegraphing) {
-    ctx.fillStyle = '#ff2222'; // Visual warning!
+    silColor = '#ff2222';
   } else if (action === 'hit') {
-    ctx.fillStyle = '#ffffff'; // White hit flash
-  } else {
-    ctx.fillStyle = isPlayer ? '#050a05' : '#030603';
+    silColor = '#ffffff';
   }
 
-  const widthScale = build === 'heavy' ? 1.35 : build === 'short' ? 0.85 : 1.0;
-  const heightScale = build === 'short' ? 0.9 : 1.0;
+  // Helper to draw pixelated rect with transparent cutout border
+  const drawPixelRect = (rx: number, ry: number, rw: number, rh: number, withBorder = false) => {
+    const px = Math.round(rx);
+    const py = Math.round(ry);
+    const pw = Math.round(rw);
+    const ph = Math.round(rh);
+
+    if (withBorder) {
+      ctx.fillStyle = cutoutColor;
+      ctx.fillRect(px - 2, py - 2, pw + 4, ph + 4);
+    }
+    ctx.fillStyle = silColor;
+    ctx.fillRect(px, py, pw, ph);
+  };
+
+  const widthScale = build === 'heavy' ? 1.45 : build === 'short' ? 0.88 : 1.0;
+  const heightScale = build === 'short' ? 0.88 : 1.0;
 
   if (action === 'knocked') {
-    // Fallen on ground
-    ctx.beginPath();
-    ctx.ellipse(0, -10, 40 * widthScale, 12, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(isPlayer ? -35 : 35, -12, 10, 0, Math.PI * 2);
-    ctx.fill();
+    drawPixelRect(-32 * widthScale, -12, 64 * widthScale, 12);
+    drawPixelRect(isPlayer ? -38 : 38, -14, 14, 14);
     ctx.restore();
     return;
   }
 
-  // Feet / Legs
+  // --- LEGS ---
   if (action === 'kicking') {
-    // Front leg extended horizontally
-    ctx.fillRect(0, -60 * heightScale, 60, 14); // Extended kick
-    ctx.fillRect(-15, -60 * heightScale, 16, 60 * heightScale); // Standing leg
+    // Front leg extended horizontally with transparent border
+    drawPixelRect(0, -60 * heightScale, 64, 14, true);
+    // Standing leg
+    drawPixelRect(-16, -60 * heightScale, 16, 60 * heightScale);
+    if (build === 'heavy') drawPixelRect(50, -62 * heightScale, 16, 18);
   } else {
-    // Normal stance legs
-    ctx.fillRect(-20 * widthScale, -55 * heightScale, 14 * widthScale, 55 * heightScale);
-    ctx.fillRect(6 * widthScale, -55 * heightScale, 14 * widthScale, 55 * heightScale);
+    // Stance legs
+    drawPixelRect(-20 * widthScale, -55 * heightScale, 14 * widthScale, 55 * heightScale);
+    drawPixelRect(6 * widthScale, -55 * heightScale, 14 * widthScale, 55 * heightScale);
   }
 
-  // Torso
+  // --- TORSO & COSTUMES ---
   const torsoY = -110 * heightScale;
-  ctx.fillRect(-18 * widthScale, torsoY, 36 * widthScale, 55 * heightScale);
+  drawPixelRect(-18 * widthScale, torsoY, 36 * widthScale, 55 * heightScale);
 
-  // Head
-  const headY = -135 * heightScale;
-  ctx.beginPath();
-  ctx.arc(0, headY, 14 * heightScale, 0, Math.PI * 2);
-  ctx.fill();
-
-  // Arms / Hands
-  if (action === 'punching') {
-    // Extended punch arm
-    ctx.fillRect(5 * widthScale, torsoY + 8, 55, 12);
-    // Back arm in guard
-    ctx.fillRect(-12 * widthScale, torsoY + 12, 16, 26);
-  } else if (action === 'blocking') {
-    // Both arms raised in high guard
-    ctx.fillRect(8 * widthScale, torsoY - 8, 12, 40);
-    ctx.fillRect(18 * widthScale, torsoY - 2, 12, 38);
-  } else if (action === 'hit') {
-    // Knocked back posture
-    ctx.fillRect(-22 * widthScale, torsoY + 10, 20, 14);
+  // Diverse Opponent Features on Torso
+  if (!isPlayer) {
+    if (build === 'short') {
+      // Storekeeper: Apron with transparent straps
+      ctx.fillStyle = cutoutColor;
+      ctx.fillRect(-12, torsoY + 8, 24, 2);
+      drawPixelRect(-14, torsoY + 10, 28, 42, true);
+    } else if (build === 'medium') {
+      // Gambler: Trench Coat tails flapping behind
+      drawPixelRect(-22, torsoY + 22, 10, 46);
+      drawPixelRect(12, torsoY + 22, 10, 42);
+    } else if (build === 'heavy') {
+      // Bouncer: Spiked Shoulder Pads
+      drawPixelRect(-28 * widthScale, torsoY - 6, 14, 12, true);
+      drawPixelRect(16 * widthScale, torsoY - 6, 14, 12, true);
+    }
   } else {
-    // Idle martial arts stance
+    // Player: Enforcer Hoodie pouch
+    drawPixelRect(-10, torsoY + 30, 20, 14, true);
+  }
+
+  // --- HEAD & HEADWEAR ---
+  const headY = -135 * heightScale;
+  drawPixelRect(-12 * heightScale, headY - 12, 24 * heightScale, 24 * heightScale);
+
+  if (isPlayer) {
+    // Player: Hoodie contour
+    drawPixelRect(-16, headY - 14, 32, 8, true);
+  } else {
+    if (build === 'short') {
+      // Storekeeper: Bald top + side hair tufts
+      drawPixelRect(-16, headY - 4, 6, 12);
+      drawPixelRect(10, headY - 4, 6, 12);
+    } else if (build === 'medium') {
+      // Gambler: Fedora Hat
+      drawPixelRect(-20, headY - 14, 40, 5, true); // Brim
+      drawPixelRect(-12, headY - 24, 24, 10);      // Crown
+      // Glowing cigarette ember spark
+      ctx.fillStyle = '#ff4400';
+      ctx.fillRect(12, headY + 4, 3, 3);
+    } else if (build === 'heavy') {
+      // Bouncer: Mohawk Hair
+      drawPixelRect(-3, headY - 28, 6, 16);
+    }
+  }
+
+  // --- ARMS WITH TRANSPARENT BORDERS ---
+  if (action === 'punching') {
+    // Extended punch arm with transparent separation border
+    drawPixelRect(5 * widthScale, torsoY + 8, 56, 13, true);
+    // Back arm in guard
+    drawPixelRect(-14 * widthScale, torsoY + 12, 16, 26, true);
+  } else if (action === 'blocking') {
+    // Both arms raised in high guard with transparent borders
+    drawPixelRect(6 * widthScale, torsoY - 8, 12, 42, true);
+    drawPixelRect(18 * widthScale, torsoY - 2, 12, 38, true);
+  } else if (action === 'hit') {
+    drawPixelRect(-22 * widthScale, torsoY + 10, 20, 14, true);
+  } else {
+    // Idle martial arts stance with transparent arm borders
     const breathingOffset = Math.sin(Date.now() * 0.006) * 3;
-    ctx.fillRect(8 * widthScale, torsoY + 10 + breathingOffset, 22, 12);
-    ctx.fillRect(-10 * widthScale, torsoY + 14 + breathingOffset, 16, 22);
+    drawPixelRect(8 * widthScale, torsoY + 10 + breathingOffset, 22, 12, true);
+    drawPixelRect(-12 * widthScale, torsoY + 14 + breathingOffset, 16, 22, true);
+
+    // Opponent handheld accessories
+    if (!isPlayer) {
+      if (build === 'short') {
+        // Storekeeper holding cane/broom
+        ctx.fillStyle = '#8b5a2b';
+        ctx.fillRect(24, torsoY + 14, 4, 60);
+      } else if (build === 'medium') {
+        // Gambler holding iron pipe
+        ctx.fillStyle = '#888888';
+        ctx.fillRect(26, torsoY + 4, 6, 28);
+      }
+    }
   }
 
   ctx.restore();
@@ -449,7 +514,7 @@ onUnmounted(() => {
       <div class="fighter-card player-side">
         <div class="name-row">
           <span class="label">YOU (ENFORCER)</span>
-          <span class="hp-txt">{{ Math.round(playerHp) }} / {{ playerMaxHp }}</span>
+          <span class="hp-txt">HEALTH</span>
         </div>
         <div class="pixel-meter">
           <div 
@@ -465,7 +530,7 @@ onUnmounted(() => {
       <!-- Opponent HP -->
       <div class="fighter-card target-side">
         <div class="name-row">
-          <span class="hp-txt">{{ Math.round(opponentHp) }} / {{ currentTargetConfig.maxHp }}</span>
+          <span class="hp-txt">TARGET HP</span>
           <span class="label text-danger">{{ currentTargetConfig.name }}</span>
         </div>
         <div class="pixel-meter">
@@ -545,7 +610,7 @@ onUnmounted(() => {
           :disabled="state.stats.doses <= 0 || state.stats.boostActive || battleOver"
           @click="triggerDrugBoost"
         >
-          ⚡ BOOST (x{{ state.stats.doses }})
+          ⚡ DRUG BOOST
         </button>
 
         <button 

@@ -64,11 +64,16 @@ const staminaColor = computed(() => {
         </span>
       </div>
 
+      <!-- Escalating Drug Cost -->
+      <div class="stat-box">
+        <span class="stat-label">DOSE COST:</span>
+        <span class="stat-value text-warning">${{ state.stats.drugCost }}</span>
+      </div>
+
       <!-- Health Meter -->
       <div class="stat-box meter-stat">
         <div class="meter-header">
-          <span class="stat-label">HEALTH:</span>
-          <span class="stat-num">{{ Math.round(state.stats.health) }}%</span>
+          <span class="stat-label">HEALTH</span>
         </div>
         <div class="pixel-meter">
           <div 
@@ -82,8 +87,7 @@ const staminaColor = computed(() => {
       <!-- Stamina Meter -->
       <div class="stat-box meter-stat">
         <div class="meter-header">
-          <span class="stat-label">STAMINA:</span>
-          <span class="stat-num">{{ Math.round(state.stats.stamina) }}%</span>
+          <span class="stat-label">STAMINA</span>
         </div>
         <div class="pixel-meter">
           <div 
@@ -97,8 +101,7 @@ const staminaColor = computed(() => {
       <!-- Addiction Meter -->
       <div class="stat-box meter-stat">
         <div class="meter-header">
-          <span class="stat-label">ADDICTION:</span>
-          <span class="stat-num">{{ Math.round(state.stats.addiction) }}%</span>
+          <span class="stat-label">ADDICTION</span>
         </div>
         <div class="pixel-meter">
           <div 
@@ -111,8 +114,8 @@ const staminaColor = computed(() => {
       <!-- Drug Inventory & Boost Action -->
       <div class="stat-box boost-stat">
         <div class="dose-count">
-          <span class="stat-label">DOSES:</span>
-          <span class="stat-value text-warning">💊 x{{ state.stats.doses }}</span>
+          <span class="stat-label">DOSE:</span>
+          <span class="stat-value text-warning">{{ state.stats.doses > 0 ? '💊 READY' : 'EMPTY' }}</span>
         </div>
 
         <button 
@@ -123,13 +126,13 @@ const staminaColor = computed(() => {
           }"
           :disabled="state.stats.doses <= 0 && !state.stats.boostActive"
           @click="handleBoost"
-          title="Consumes 1 dose for temporary power boost (Cost: long-term health & crash)"
+          title="Consumes dose for temporary surge (Cost: long-term health & crash)"
         >
           <template v-if="state.stats.boostActive">
-            ⚡ HIGH! ({{ state.stats.boostTimer }}s)
+            ⚡ SURGE ACTIVE
           </template>
           <template v-else-if="state.stats.sluggishTimer > 0">
-            💤 CRASH ({{ state.stats.sluggishTimer }}s)
+            💤 CRASHED
           </template>
           <template v-else>
             BOOST [SPACE]

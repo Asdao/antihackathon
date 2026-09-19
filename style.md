@@ -65,10 +65,38 @@ High-contrast 1-bit cyberpunk arcade:
 
 Both minigames (**Shadow Fighter** and **Parkour Runner**) follow strict silhouette design rules:
 
-- **Actors**: Drawn in solid silhouette (`#020502` to `#050a05`). No facial features or internal textures—expression is conveyed purely through stance, posture, and movement.
+- **Actors**: Drawn in solid silhouette (`#020502` to `#050a05`). No facial features or internal textures—expression is conveyed purely through stance, posture, accessories, and movement.
+- **Transparent Limb Borders**:
+  - Overlapping limbs (arms over torso, legs) use a $2\text{px}$ negative-space cutout border rendered in the background color.
+  - This guarantees clear visual separation of arms, fists, and weapons against dark torsos without needing internal sprite textures.
+- **Pixelated Block Rendering**:
+  - Limbs, hair, and weapons are snapped to chunky integer pixel steps ($2\text{px} - 4\text{px}$) with squared-off edges rather than smoothed curves.
 - **Telegraphing**: When an opponent prepares an attack, their silhouette flashes crimson (`#ff2222`) for $0.4\text{s}$, giving the player a clear visual window to block or dodge.
-- **Drug High Effect**: When boosted, characters gain an electric cyan aura (`ctx.shadowColor = '#00ffff'`, `ctx.shadowBlur = 12`).
+- **Drug High Effect**: When boosted, characters gain an electric cyan aura (`ctx.shadowColor = '#00ffff'`, `ctx.shadowBlur = 14`).
 - **Hit Sparks**: Square pixel debris particles flying radially on impact (`3x3` pixel rectangles with gravity).
-- **Physical Decay Cues**:
-  - Mild in Loan Shark stage: slight sluggishness after boost.
-  - Noticeable in Thieves stage: screen edge red vignette, camera jitters, and heavy stamina depletion.
+
+---
+
+## 5. Character Evolution & Diverse Opponents
+
+### Character Evolution Between Gameplay Instances
+1. **Debt Collection (Age 18 - Enforcer Trainee)**:
+   - Upright, athletic martial arts posture.
+   - Hooded sweatshirt with pouch, denim jeans, sneakers, sturdy frame with clean limb separation.
+2. **Thieves Stage (Age 19 - Strung-Out Getaway)**:
+   - Visibly gaunt and emaciated (torso width reduced by ~30%).
+   - Tattered ragged coat shreds fluttering behind the runner.
+   - Wild, unkempt jagged pixel hair.
+   - Desperate forward-hunched running gait, clutching chest in cardiovascular agony.
+
+### Diverse Opponent Silhouettes (Shadow Fighter)
+1. **Corner Store Owner**:
+   - Stocky, rounded silhouette with apron (cutout straps).
+   - Bald top with side hair tufts; holds a defensive cane/broom.
+2. **Underground Gambler**:
+   - Slick fedora hat and long trench coat with flared split tails.
+   - Armed with an iron pipe; glowing cigarette ember spark (`#ff4400`) at lip.
+3. **Rogue Warehouse Bouncer**:
+   - Massive broad-shouldered frame ($1.45\times$ scale).
+   - Spiked shoulder pads, combat boots, and a tall mohawk hairstyle.
+

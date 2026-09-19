@@ -12,27 +12,27 @@ let animationFrameId: number | null = null;
 const robConfigs = [
   {
     level: 1,
-    title: 'ROBBERY 1 // ALLEYWAY BAG SNATCH',
+    title: 'GETAWAY // RAIN-SLICKED ALLEYWAYS',
     targetDistance: 400,
     speed: 4.8,
     decayMultiplier: 1.0,
-    subtitle: 'Escape the local patrol through back alleys.',
+    subtitle: 'Escape local patrol through back alleys.',
   },
   {
     level: 2,
-    title: 'ROBBERY 2 // PENTHOUSE ROOFTOP RUN',
+    title: 'GETAWAY // PENTHOUSE ROOFTOPS',
     targetDistance: 550,
     speed: 5.5,
     decayMultiplier: 1.8,
-    subtitle: 'Stolen jewelry in hand. Severe chest tightness.',
+    subtitle: 'Stolen cash in hand. Severe chest tightness.',
   },
   {
     level: 3,
-    title: 'ROBBERY 3 // HELICOPTER SPOTLIGHT CLIMAX',
+    title: 'GETAWAY // CRANE ESCAPE CLIMAX',
     targetDistance: 700,
     speed: 6.2,
     decayMultiplier: 2.8,
-    subtitle: 'Sirens everywhere! Running on fumes and pure adrenaline.',
+    subtitle: 'Sirens everywhere! Running on fumes and adrenaline.',
   },
 ];
 
@@ -386,7 +386,7 @@ function render() {
   animationFrameId = requestAnimationFrame(render);
 }
 
-// Silhouette Runner Rendering
+// Stylized Gaunt Silhouette Runner (Age 19, addicted, ragged clothes, transparent limb borders & pixel blocks)
 function drawSilhouetteRunner(
   ctx: CanvasRenderingContext2D,
   x: number,
@@ -396,53 +396,85 @@ function drawSilhouetteRunner(
   boosted: boolean
 ) {
   ctx.save();
-  ctx.translate(x, footY);
+  ctx.translate(Math.round(x), Math.round(footY));
 
   if (boosted) {
     ctx.shadowColor = '#00ffff';
-    ctx.shadowBlur = 15;
+    ctx.shadowBlur = 14;
   }
 
-  ctx.fillStyle = '#020502'; // Pitch black silhouette
+  // Background cutout color used for transparent separation borders between overlapping limbs
+  const cutoutColor = state.currentRobLevel === 3 ? '#080511' : '#0a140d';
+  const silColor = '#020502';
+
+  // Helper to draw pixelated rect with transparent cutout border
+  const drawPixelBlock = (rx: number, ry: number, rw: number, rh: number, withBorder = false) => {
+    const px = Math.round(rx);
+    const py = Math.round(ry);
+    const pw = Math.round(rw);
+    const ph = Math.round(rh);
+
+    if (withBorder) {
+      ctx.fillStyle = cutoutColor;
+      ctx.fillRect(px - 2, py - 2, pw + 4, ph + 4);
+    }
+    ctx.fillStyle = silColor;
+    ctx.fillRect(px, py, pw, ph);
+  };
 
   if (sliding) {
-    // Sliding posture: stretched low horizontally
-    ctx.fillRect(0, -18, 48, 16); // Body sliding
-    ctx.beginPath();
-    ctx.arc(42, -18, 9, 0, Math.PI * 2); // Head forward
-    ctx.fill();
-    // Smoke / friction dust
-    ctx.fillStyle = '#666';
-    ctx.fillRect(-10, -4, 8, 4);
+    // Low, desperate street slide
+    drawPixelBlock(0, -16, 44, 14);
+    drawPixelBlock(36, -22, 12, 12); // Head forward
+    drawPixelBlock(-10, -10, 16, 6, true); // Arm trailing with transparent border
+    ctx.fillStyle = '#445544';
+    ctx.fillRect(-12, -4, 6, 4); // Pixel friction dust
   } else if (!grounded) {
-    // Jump posture: legs tucked, arms angled back
-    ctx.fillRect(0, -42, 20, 26); // Torso
-    ctx.fillRect(-6, -20, 14, 16); // Tucked leg 1
-    ctx.fillRect(10, -22, 14, 18); // Tucked leg 2
-    ctx.beginPath();
-    ctx.arc(10, -52, 10, 0, Math.PI * 2); // Head
-    ctx.fill();
-    ctx.fillRect(-8, -38, 12, 18); // Arms outstretched
+    // Desperate mid-air leap: thin gaunt torso, ragged coat tails, wild jagged hair
+    drawPixelBlock(0, -44, 14, 26);
+    // Wild jagged pixel hair
+    drawPixelBlock(4, -60, 14, 12);
+    drawPixelBlock(16, -64, 6, 8);
+    drawPixelBlock(-2, -58, 6, 6);
+    // Ragged coat shreds trailing behind
+    drawPixelBlock(-12, -36, 12, 6);
+    drawPixelBlock(-16, -30, 8, 4);
+    // Tucked legs with pixel boots
+    drawPixelBlock(-6, -20, 10, 14);
+    drawPixelBlock(6, -22, 10, 16);
+    // Outstretched arms with transparent cutout borders
+    drawPixelBlock(-10, -40, 10, 18, true);
+    drawPixelBlock(10, -42, 14, 10, true);
   } else {
-    // Running Animation: 4 frame gait
-    const legPhase = Math.sin(runFrameCount * 0.35);
-    const torsoBob = Math.abs(Math.sin(runFrameCount * 0.35)) * 4;
+    // Desperate addict sprint: forward hunched posture, fluttering shreds, clutching chest
+    const legPhase = Math.sin(runFrameCount * 0.38);
+    const torsoBob = Math.abs(Math.sin(runFrameCount * 0.38)) * 4;
 
-    // Torso
+    // Hunched forward angle (agony & exhaustion)
+    ctx.rotate(0.08);
+
+    // Gaunt thin torso
     const torsoY = -46 + torsoBob;
-    ctx.fillRect(2, torsoY, 18, 28);
+    drawPixelBlock(2, torsoY, 13, 26);
 
-    // Head
-    ctx.beginPath();
-    ctx.arc(12, torsoY - 10, 10, 0, Math.PI * 2);
-    ctx.fill();
+    // Ragged jacket shreds fluttering in the wind
+    const flutter = Math.sin(runFrameCount * 0.5) * 4;
+    drawPixelBlock(-10, torsoY + 12 + flutter, 12, 6);
+    drawPixelBlock(-14, torsoY + 18 - flutter, 8, 4);
 
-    // Legs swinging
-    ctx.fillRect(4 + legPhase * 12, torsoY + 26, 8, 20 - torsoBob);
-    ctx.fillRect(10 - legPhase * 12, torsoY + 26, 8, 20 - torsoBob);
+    // Head with wild, unwashed jagged pixel hair
+    drawPixelBlock(4, torsoY - 14, 12, 12);
+    drawPixelBlock(0, torsoY - 18, 6, 6);   // Wild hair spike 1
+    drawPixelBlock(-4, torsoY - 14, 6, 4);  // Wild hair spike 2
+    drawPixelBlock(12, torsoY - 16, 6, 4);  // Brow peak
 
-    // Arms pumping
-    ctx.fillRect(2 - legPhase * 10, torsoY + 6, 16, 8);
+    // Legs with pixel boots
+    drawPixelBlock(2 + legPhase * 11, torsoY + 24, 7, 20 - torsoBob);
+    drawPixelBlock(7 - legPhase * 11, torsoY + 24, 7, 20 - torsoBob);
+
+    // Arms with transparent separation border (Clutching chest & pumping)
+    drawPixelBlock(-6 - legPhase * 8, torsoY + 4, 8, 16, true);
+    drawPixelBlock(6 + legPhase * 8, torsoY + 6, 16, 8, true);
   }
 
   ctx.restore();
@@ -472,8 +504,8 @@ onUnmounted(() => {
       <!-- Distance Progress -->
       <div class="distance-bar-wrapper">
         <div class="dist-header">
-          <span>PROGRESS: {{ Math.round(distanceTraveled) }}m / {{ currentConfig.targetDistance }}m</span>
-          <span class="hits-label">TRIPPED: {{ hitCount }} / {{ maxHits }}</span>
+          <span>GETAWAY ROUTE</span>
+          <span class="hits-label">STATUS: {{ hitCount === 0 ? 'STEADY' : hitCount === 1 ? 'VULNERABLE' : 'CRITICAL' }}</span>
         </div>
         <div class="pixel-meter">
           <div 
@@ -496,7 +528,7 @@ onUnmounted(() => {
       <!-- Overlay Victory / Defeat Modal -->
       <div v-if="runOver" class="run-overlay">
         <template v-if="runResult === 'win'">
-          <div class="result-title text-success">ROBBERY ESCAPED!</div>
+          <div class="result-title text-success">ESCAPE SUCCESSFUL</div>
           <p class="result-desc">You slipped past the pursuit with the cash into the next borough.</p>
           <button class="retro-btn" @click="finishRun">
             PROCEED TO NEXT STAGE ➔
@@ -505,7 +537,7 @@ onUnmounted(() => {
         <template v-else>
           <div class="result-title text-danger">BODY COLLAPSE</div>
           <p class="result-desc">
-            Your drug-weakened body and failing stamina gave out. You tripped and collapsed on the concrete.
+            Your drug-weakened body and failing stamina gave out. You collapsed on the concrete.
           </p>
           <button class="retro-btn retro-btn-danger" @click="finishRun">
             VIEW THE ENDING ➔
@@ -542,7 +574,7 @@ onUnmounted(() => {
           :disabled="state.stats.doses <= 0 || state.stats.boostActive || runOver"
           @click="handleBoost"
         >
-          ⚡ BOOST (x{{ state.stats.doses }})
+          ⚡ DRUG BOOST
         </button>
 
         <button 

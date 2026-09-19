@@ -11,6 +11,7 @@ export interface PlayerStats {
   stamina: number;        // 0 - 100
   addiction: number;      // 0 - 100
   tolerance: number;      // 0 - 100
+  drugCost: number;       // Escalates with tolerance & addiction
   doses: number;
   age: string;
   boostActive: boolean;
