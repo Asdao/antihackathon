@@ -54,6 +54,8 @@ This project is built on the principle of **radical minimalism**: maximizing nar
    All canvas loops, keyboard listeners (`window.addEventListener`), and timer intervals must be explicitly cancelled and disconnected in `onUnmounted()`.
 3. **Responsive Scaling**:
    Canvas elements use fixed internal coordinate spaces (e.g. `640x380`) with CSS `object-fit: cover` and `width: 100%`, preserving pixel ratios on both mobile and desktop.
+4. **Merged Silhouette Blocks & Reduced Moving Parts**:
+   Characters must not be composed of dozens of independently oscillating micro-blocks. Silhouettes are consolidated into 2–3 cohesive structural masses (Consolidated Upper Body, Consolidated Stance/Legs Base, and Consolidated Limb/Arm with transparent negative-space cutout borders). Motion uses authentic retro stepped keyframes rather than fractional floating sine drifts.
 
 ---
 

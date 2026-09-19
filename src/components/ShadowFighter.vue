@@ -385,107 +385,102 @@ function drawSilhouetteFighter(
     ctx.fillRect(px, py, pw, ph);
   };
 
-  const widthScale = build === 'heavy' ? 1.45 : build === 'short' ? 0.88 : 1.0;
-  const heightScale = build === 'short' ? 0.88 : 1.0;
+  const widthScale = build === 'heavy' ? 1.4 : build === 'short' ? 0.9 : 1.0;
+  const heightScale = build === 'short' ? 0.9 : 1.0;
 
+  // Knocked out: unified fallen silhouette block
   if (action === 'knocked') {
-    drawPixelRect(-32 * widthScale, -12, 64 * widthScale, 12);
-    drawPixelRect(isPlayer ? -38 : 38, -14, 14, 14);
+    drawPixelRect(-34 * widthScale, -14, 68 * widthScale, 14);
+    drawPixelRect(isPlayer ? -42 : 42, -18, 16, 16);
     ctx.restore();
     return;
   }
 
-  // --- LEGS ---
+  // Unified body weight shift on action (whole body moves together)
+  let bodyShiftX = 0;
+  let bodyShiftY = 0;
+  if (action === 'punching') bodyShiftX = 8;
+  else if (action === 'kicking') bodyShiftX = 6;
+  else if (action === 'hit') bodyShiftX = -10;
+  else if (action === 'blocking') bodyShiftX = -4;
+
+  const torsoY = Math.round(-112 * heightScale + bodyShiftY);
+
+  // --- 1. CONSOLIDATED LOWER STANCE (LEGS) ---
   if (action === 'kicking') {
-    // Front leg extended horizontally with transparent border
-    drawPixelRect(0, -60 * heightScale, 64, 14, true);
-    // Standing leg
-    drawPixelRect(-16, -60 * heightScale, 16, 60 * heightScale);
-    if (build === 'heavy') drawPixelRect(50, -62 * heightScale, 16, 18);
+    // Standing support leg
+    drawPixelRect(-16, -55 * heightScale, 16, 55 * heightScale);
+    // Extended horizontal kicking leg with transparent cutout border
+    drawPixelRect(bodyShiftX, torsoY + 44 * heightScale, 64, 16, true);
   } else {
-    // Stance legs
-    drawPixelRect(-20 * widthScale, -55 * heightScale, 14 * widthScale, 55 * heightScale);
-    drawPixelRect(6 * widthScale, -55 * heightScale, 14 * widthScale, 55 * heightScale);
+    // Solid stance base with a clean negative-space cutout slit separating the legs
+    const stanceW = Math.round(38 * widthScale);
+    drawPixelRect(-18 * widthScale + bodyShiftX * 0.4, -54 * heightScale, stanceW, 54 * heightScale);
+    // Cutout slit between legs
+    ctx.fillStyle = cutoutColor;
+    ctx.fillRect(Math.round(-2 * widthScale + bodyShiftX * 0.4), Math.round(-46 * heightScale), 5, Math.round(46 * heightScale));
   }
 
-  // --- TORSO & COSTUMES ---
-  const torsoY = -110 * heightScale;
-  drawPixelRect(-18 * widthScale, torsoY, 36 * widthScale, 55 * heightScale);
+  // --- 2. CONSOLIDATED UPPER BODY (MERGED TORSO + HEAD + COSTUME SILHOUETTE) ---
+  // A single unified silhouette mass from waist to head top, avoiding fragmented floating pieces
+  const bodyW = Math.round(34 * widthScale);
+  const bodyH = Math.round(76 * heightScale);
+  const bodyX = Math.round(-17 * widthScale + bodyShiftX);
+  const headTopY = torsoY - Math.round(24 * heightScale);
 
-  // Diverse Opponent Features on Torso
-  if (!isPlayer) {
-    if (build === 'short') {
-      // Storekeeper: Apron with transparent straps
-      ctx.fillStyle = cutoutColor;
-      ctx.fillRect(-12, torsoY + 8, 24, 2);
-      drawPixelRect(-14, torsoY + 10, 28, 42, true);
-    } else if (build === 'medium') {
-      // Gambler: Trench Coat tails flapping behind
-      drawPixelRect(-22, torsoY + 22, 10, 46);
-      drawPixelRect(12, torsoY + 22, 10, 42);
-    } else if (build === 'heavy') {
-      // Bouncer: Spiked Shoulder Pads
-      drawPixelRect(-28 * widthScale, torsoY - 6, 14, 12, true);
-      drawPixelRect(16 * widthScale, torsoY - 6, 14, 12, true);
-    }
-  } else {
-    // Player: Enforcer Hoodie pouch
-    drawPixelRect(-10, torsoY + 30, 20, 14, true);
-  }
+  // Draw main torso & neck/head base as unified silhouette
+  drawPixelRect(bodyX, headTopY, bodyW, bodyH);
 
-  // --- HEAD & HEADWEAR ---
-  const headY = -135 * heightScale;
-  drawPixelRect(-12 * heightScale, headY - 12, 24 * heightScale, 24 * heightScale);
-
+  // Distinct costume / archetype silhouette contours merged directly into the core body
   if (isPlayer) {
-    // Player: Hoodie contour
-    drawPixelRect(-16, headY - 14, 32, 8, true);
+    // Player (Hooded Enforcer): Hood crown contour + front pouch outline
+    drawPixelRect(bodyX - 2, headTopY - 4, bodyW + 4, 8);
+    drawPixelRect(bodyX + 6, torsoY + 28, 18, 12, true); // Pouch cutout
   } else {
     if (build === 'short') {
-      // Storekeeper: Bald top + side hair tufts
-      drawPixelRect(-16, headY - 4, 6, 12);
-      drawPixelRect(10, headY - 4, 6, 12);
+      // Storekeeper: Rounded shoulders & apron contour
+      drawPixelRect(bodyX - 3, headTopY + 12, bodyW + 6, bodyH - 12);
+      ctx.fillStyle = cutoutColor;
+      ctx.fillRect(bodyX + 4, torsoY + 6, bodyW - 8, 2); // Apron neck strap
     } else if (build === 'medium') {
-      // Gambler: Fedora Hat
-      drawPixelRect(-20, headY - 14, 40, 5, true); // Brim
-      drawPixelRect(-12, headY - 24, 24, 10);      // Crown
-      // Glowing cigarette ember spark
+      // Gambler: Fedora Hat merged on top + long coat flare
+      drawPixelRect(bodyX - 5, headTopY - 6, bodyW + 10, 5, true); // Hat brim
+      drawPixelRect(bodyX + 2, headTopY - 14, bodyW - 4, 9);       // Hat crown
+      drawPixelRect(bodyX - 6, torsoY + 20, 8, 44);                // Flared coat tail
+      // Glowing cigarette ember
       ctx.fillStyle = '#ff4400';
-      ctx.fillRect(12, headY + 4, 3, 3);
+      ctx.fillRect(bodyX + bodyW - 2, headTopY + 18, 3, 3);
     } else if (build === 'heavy') {
-      // Bouncer: Mohawk Hair
-      drawPixelRect(-3, headY - 28, 6, 16);
+      // Bouncer: Spiked shoulder blocks & mohawk crown
+      drawPixelRect(bodyX - 6, headTopY + 16, bodyW + 12, 14); // Broad spiked shoulders
+      drawPixelRect(bodyX + Math.round(bodyW / 2) - 3, headTopY - 14, 6, 15); // Mohawk
     }
   }
 
-  // --- ARMS WITH TRANSPARENT BORDERS ---
+  // --- 3. CONSOLIDATED ARMS WITH TRANSPARENT SEPARATION BORDER ---
   if (action === 'punching') {
-    // Extended punch arm with transparent separation border
-    drawPixelRect(5 * widthScale, torsoY + 8, 56, 13, true);
-    // Back arm in guard
-    drawPixelRect(-14 * widthScale, torsoY + 12, 16, 26, true);
+    // Solid punch limb extending forward with 2px cutout border
+    drawPixelRect(bodyX + bodyW - 4, torsoY + 6, 48, 14, true);
+    // Guard hand tucked at hip
+    drawPixelRect(bodyX - 4, torsoY + 14, 12, 20, true);
   } else if (action === 'blocking') {
-    // Both arms raised in high guard with transparent borders
-    drawPixelRect(6 * widthScale, torsoY - 8, 12, 42, true);
-    drawPixelRect(18 * widthScale, torsoY - 2, 12, 38, true);
+    // Solid crossed guard shield block over chest
+    drawPixelRect(bodyX + bodyW - 12, torsoY - 4, 14, 40, true);
   } else if (action === 'hit') {
-    drawPixelRect(-22 * widthScale, torsoY + 10, 20, 14, true);
+    // Arms flung back in impact
+    drawPixelRect(bodyX - 14, torsoY + 10, 16, 14, true);
   } else {
-    // Idle martial arts stance with transparent arm borders
-    const breathingOffset = Math.sin(Date.now() * 0.006) * 3;
-    drawPixelRect(8 * widthScale, torsoY + 10 + breathingOffset, 22, 12, true);
-    drawPixelRect(-12 * widthScale, torsoY + 14 + breathingOffset, 16, 22, true);
+    // Idle stance: consolidated guard held at chest with transparent separation border
+    drawPixelRect(bodyX + 12, torsoY + 8, 18, 16, true);
 
     // Opponent handheld accessories
     if (!isPlayer) {
       if (build === 'short') {
-        // Storekeeper holding cane/broom
         ctx.fillStyle = '#8b5a2b';
-        ctx.fillRect(24, torsoY + 14, 4, 60);
+        ctx.fillRect(bodyX + bodyW + 4, torsoY + 6, 4, 58); // Cane
       } else if (build === 'medium') {
-        // Gambler holding iron pipe
         ctx.fillStyle = '#888888';
-        ctx.fillRect(26, torsoY + 4, 6, 28);
+        ctx.fillRect(bodyX + bodyW + 2, torsoY + 2, 5, 26); // Pipe
       }
     }
   }

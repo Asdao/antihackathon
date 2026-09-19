@@ -423,58 +423,49 @@ function drawSilhouetteRunner(
   };
 
   if (sliding) {
-    // Low, desperate street slide
-    drawPixelBlock(0, -16, 44, 14);
-    drawPixelBlock(36, -22, 12, 12); // Head forward
-    drawPixelBlock(-10, -10, 16, 6, true); // Arm trailing with transparent border
+    // Merged low-profile slide block: unified torso + head + arm
+    drawPixelBlock(0, -18, 48, 14);
+    drawPixelBlock(40, -22, 10, 8); // Head forward
+    drawPixelBlock(8, -14, 18, 6, true); // Trailing arm cutout
     ctx.fillStyle = '#445544';
-    ctx.fillRect(-12, -4, 6, 4); // Pixel friction dust
+    ctx.fillRect(-10, -4, 6, 4); // Friction dust
   } else if (!grounded) {
-    // Desperate mid-air leap: thin gaunt torso, ragged coat tails, wild jagged hair
-    drawPixelBlock(0, -44, 14, 26);
-    // Wild jagged pixel hair
-    drawPixelBlock(4, -60, 14, 12);
-    drawPixelBlock(16, -64, 6, 8);
-    drawPixelBlock(-2, -58, 6, 6);
-    // Ragged coat shreds trailing behind
-    drawPixelBlock(-12, -36, 12, 6);
-    drawPixelBlock(-16, -30, 8, 4);
-    // Tucked legs with pixel boots
-    drawPixelBlock(-6, -20, 10, 14);
-    drawPixelBlock(6, -22, 10, 16);
-    // Outstretched arms with transparent cutout borders
-    drawPixelBlock(-10, -40, 10, 18, true);
-    drawPixelBlock(10, -42, 14, 10, true);
+    // Merged airborne leap silhouette: unified tucked body mass + single reaching arm
+    // Unified body mass (head + gaunt torso + tucked knees)
+    drawPixelBlock(0, -56, 18, 46);
+    drawPixelBlock(6, -62, 10, 8); // Jagged head contour
+    drawPixelBlock(-6, -42, 8, 12); // Tattered coat flare
+    // Consolidated reaching arm with transparent border
+    drawPixelBlock(10, -44, 16, 9, true);
   } else {
-    // Desperate addict sprint: forward hunched posture, fluttering shreds, clutching chest
-    const legPhase = Math.sin(runFrameCount * 0.38);
-    const torsoBob = Math.abs(Math.sin(runFrameCount * 0.38)) * 4;
+    // Merged running silhouette: 2-step retro stride (reduced moving parts)
+    const step = Math.floor((runFrameCount / 6) % 2);
+    const torsoBob = step === 0 ? 0 : 3;
 
-    // Hunched forward angle (agony & exhaustion)
+    // Hunched forward angle (physical agony)
     ctx.rotate(0.08);
 
-    // Gaunt thin torso
-    const torsoY = -46 + torsoBob;
-    drawPixelBlock(2, torsoY, 13, 26);
+    const torsoY = -48 + torsoBob;
 
-    // Ragged jacket shreds fluttering in the wind
-    const flutter = Math.sin(runFrameCount * 0.5) * 4;
-    drawPixelBlock(-10, torsoY + 12 + flutter, 12, 6);
-    drawPixelBlock(-14, torsoY + 18 - flutter, 8, 4);
+    // 1. CONSOLIDATED LEGS: Stepped retro stride (attached solidly to hip)
+    if (step === 0) {
+      // Scissor stride pose (grounded stance base with clean separation)
+      drawPixelBlock(-8, torsoY + 26, 26, 20);
+      ctx.fillStyle = cutoutColor;
+      ctx.fillRect(2, torsoY + 28, 4, 18); // Leg separation slit
+    } else {
+      // Passing stride pose (compact single leg pillar)
+      drawPixelBlock(-2, torsoY + 26, 16, 20);
+    }
 
-    // Head with wild, unwashed jagged pixel hair
-    drawPixelBlock(4, torsoY - 14, 12, 12);
-    drawPixelBlock(0, torsoY - 18, 6, 6);   // Wild hair spike 1
-    drawPixelBlock(-4, torsoY - 14, 6, 4);  // Wild hair spike 2
-    drawPixelBlock(12, torsoY - 16, 6, 4);  // Brow peak
+    // 2. CONSOLIDATED UPPER BODY: Merged head + gaunt torso + ragged coat tail
+    drawPixelBlock(0, torsoY - 8, 16, 36);   // Unified gaunt torso
+    drawPixelBlock(4, torsoY - 18, 12, 12);  // Head contour
+    drawPixelBlock(0, torsoY - 22, 8, 6);    // Wild jagged hair crest
+    drawPixelBlock(-8, torsoY + 12, 10, 14); // Ragged coat tail
 
-    // Legs with pixel boots
-    drawPixelBlock(2 + legPhase * 11, torsoY + 24, 7, 20 - torsoBob);
-    drawPixelBlock(7 - legPhase * 11, torsoY + 24, 7, 20 - torsoBob);
-
-    // Arms with transparent separation border (Clutching chest & pumping)
-    drawPixelBlock(-6 - legPhase * 8, torsoY + 4, 8, 16, true);
-    drawPixelBlock(6 + legPhase * 8, torsoY + 6, 16, 8, true);
+    // 3. CONSOLIDATED ARM: Single solid arm clutching chest with transparent cutout border
+    drawPixelBlock(4, torsoY + 4, 14, 10, true);
   }
 
   ctx.restore();

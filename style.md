@@ -71,6 +71,8 @@ Both minigames (**Shadow Fighter** and **Parkour Runner**) follow strict silhoue
   - This guarantees clear visual separation of arms, fists, and weapons against dark torsos without needing internal sprite textures.
 - **Pixelated Block Rendering**:
   - Limbs, hair, and weapons are snapped to chunky integer pixel steps ($2\text{px} - 4\text{px}$) with squared-off edges rather than smoothed curves.
+- **Consolidated Merged Blocks**:
+  - Instead of rendering dozens of floating disjointed micro-pieces, silhouettes are merged into 2–3 cohesive solid blocks (Unified Core Body, Grounded Stance Base with cutout slit, and Consolidated Limb/Arm with transparent negative-space cutout border). Stepped retro frame cycles replace disjointed sine-wave float.
 - **Telegraphing**: When an opponent prepares an attack, their silhouette flashes crimson (`#ff2222`) for $0.4\text{s}$, giving the player a clear visual window to block or dodge.
 - **Drug High Effect**: When boosted, characters gain an electric cyan aura (`ctx.shadowColor = '#00ffff'`, `ctx.shadowBlur = 14`).
 - **Hit Sparks**: Square pixel debris particles flying radially on impact (`3x3` pixel rectangles with gravity).
