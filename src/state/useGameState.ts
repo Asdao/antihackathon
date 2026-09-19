@@ -1,7 +1,7 @@
 import { reactive, computed } from 'vue';
-import type { GameMode, PlayerStats, StoryChoice, StoryLogItem, StoryNode } from '../types/game';
-import { STORY_NODES } from '../data/storyNodes';
-import { soundManager } from '../audio/SoundManager';
+import type { GameMode, PlayerStats, StoryChoice, StoryLogItem, StoryNode } from '../types/game.ts';
+import { STORY_NODES } from '../data/storyNodes.ts';
+import { soundManager } from '../audio/SoundManager.ts';
 
 const defaultStats = (): PlayerStats => ({
   cash: 40,
@@ -73,6 +73,7 @@ export function useGameState() {
     if (deltas.debtDelta) s.debt = Math.max(0, s.debt + deltas.debtDelta);
     if (deltas.healthDelta) s.health = Math.max(0, Math.min(100, s.health + deltas.healthDelta));
     if (deltas.addictionDelta) s.addiction = Math.max(0, Math.min(100, s.addiction + deltas.addictionDelta));
+    if (deltas.toleranceDelta) s.tolerance = Math.max(0, Math.min(100, s.tolerance + deltas.toleranceDelta));
     if (deltas.dosesDelta) s.doses = Math.max(0, s.doses + deltas.dosesDelta);
 
     // Compounding Predatory Debt: Debt keeps multiplying with weekly extortionate rates
@@ -160,6 +161,7 @@ export function useGameState() {
         state.stats.age = next.age;
         if (next.logMessage) addLog(next.logMessage, next.isEnding ? 'danger' : 'info');
         if (next.statEffects) applyStatDeltas(next.statEffects);
+        else if (state.stats.debt > 0) applyStatDeltas({});
 
         if (next.id === 'POLICE_RAID') soundManager.startSirens();
         else soundManager.stopSirens();
@@ -194,8 +196,8 @@ export function useGameState() {
   };
 
   const ROB_FAILS: Record<number, string> = {
-    1: 'ENDING_COLLAPSE_STREET',
-    2: 'ENDING_COLLAPSE_OD',
+    1: 'ENDING_ARRESTED_STREET',
+    2: 'ENDING_ARRESTED_STREET',
     3: 'CLIMAX_ESCAPE',
   };
 

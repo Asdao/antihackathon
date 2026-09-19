@@ -101,4 +101,16 @@ This project is built on the principle of **radical minimalism**: maximizing nar
    - Auto-triggers following the cinematic flatline and CRT TV reboot into the epilogue.
    - Can be reviewed anytime via persistent `[ 📊 VIEW CRISIS STATISTICS ]` action buttons in both the epilogue card and story game-over banners.
 
+---
+
+## 8. Narrative Progression & Automated Test Suite
+
+1. **Robbery Stages Branching (Arrest vs. Death)**:
+   - Failures and surrender choices in Robberies 1 and 2 result in apprehension and arrest by police (`ENDING_ARRESTED_STREET`).
+   - Physical collapse and death are strictly reserved for the 3rd robbery stage climax (`CLIMAX_ESCAPE`), leading to the cinematic flatline sequence.
+2. **Zero-Dependency Native Automated Testing**:
+   - Automated tests are executed via Node.js native test runner (`npm test` / `node --test`).
+   - Tests comprehensively verify story graph continuity, choice validity, robbery arrest/death routing, count prohibitions, compounding debt, and substance cost escalation.
+
+
 

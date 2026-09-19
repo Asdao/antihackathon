@@ -50,6 +50,7 @@ export interface StoryNode {
     debtDelta?: number;
     healthDelta?: number;
     addictionDelta?: number;
+    toleranceDelta?: number;
     dosesDelta?: number;
   };
   choices: StoryChoice[];

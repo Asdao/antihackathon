@@ -1,4 +1,4 @@
-import type { StoryNode } from '../types/game';
+import type { StoryNode } from '../types/game.ts';
 
 export const STORY_NODES: Record<string, StoryNode> = {
   // --- SCHOOL & ALLOWANCE STAGE ---
@@ -383,21 +383,21 @@ export const STORY_NODES: Record<string, StoryNode> = {
         btnClass: 'danger',
       },
       {
-        text: 'No (Collapse in rain)',
-        targetNodeId: 'ENDING_COLLAPSE_STREET',
+        text: 'No (Surrender to sirens)',
+        targetNodeId: 'ENDING_ARRESTED_STREET',
         btnClass: 'warning',
       },
     ],
   },
 
-  'ENDING_COLLAPSE_STREET': {
-    id: 'ENDING_COLLAPSE_STREET',
-    stageTitle: 'COLLAPSE // STREET FATALITY',
+  'ENDING_ARRESTED_STREET': {
+    id: 'ENDING_ARRESTED_STREET',
+    stageTitle: 'ARRESTED // STREET APPREHENSION',
     age: 'Age 19',
-    situation: 'Body gives out in a freezing alley. Hypothermia and cardiovascular failure.',
-    logMessage: 'Collapsed on city pavement.',
+    situation: 'Squad cars box the alleyway. Cornered against the brick wall, cuffed, and loaded into custody.',
+    logMessage: 'Cornered by police during getaway. Arrested.',
     isEnding: true,
-    endingReason: 'Hypothermia & Cardiovascular Failure',
+    endingReason: 'Arrested & Incarcerated for Street Theft',
     choices: [],
   },
 
@@ -420,22 +420,11 @@ export const STORY_NODES: Record<string, StoryNode> = {
         btnClass: 'danger',
       },
       {
-        text: 'No (Collapse)',
-        targetNodeId: 'ENDING_COLLAPSE_OD',
+        text: 'No (Surrender on roof)',
+        targetNodeId: 'ENDING_ARRESTED_STREET',
         btnClass: 'warning',
       },
     ],
-  },
-
-  'ENDING_COLLAPSE_OD': {
-    id: 'ENDING_COLLAPSE_OD',
-    stageTitle: 'OVERDOSE // RESPIRATORY COLLAPSE',
-    age: 'Age 19',
-    situation: 'Street adulterants trigger acute respiratory arrest. You slip into a fatal coma on the roof.',
-    logMessage: 'Fatal overdose caused respiratory arrest.',
-    isEnding: true,
-    endingReason: 'Fatal Toxicity & Respiratory Collapse',
-    choices: [],
   },
 
   'STAGE_ROB_3_INTRO': {
@@ -455,8 +444,8 @@ export const STORY_NODES: Record<string, StoryNode> = {
         btnClass: 'danger',
       },
       {
-        text: 'No (Give up)',
-        targetNodeId: 'ENDING_ARRESTED',
+        text: 'No (Chest gives out)',
+        targetNodeId: 'CLIMAX_ESCAPE',
         btnClass: 'warning',
       },
     ],
